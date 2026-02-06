@@ -1,0 +1,31 @@
+Name- Yagnik Vanodiya
+Enrolment number -AU2440136
+section-2
+Group-s2_g5_net
+
+Generate a lecture scribe intended to serve as accurate reference material for exam preparation.
+Use only the provided lecture slides and relevant textbook content as the authoritative context.
+
+The lecture scribe must:
+
+Faithfully reconstruct what was taught in the lecture without introducing any new information.
+
+Include all definitions, notation, assumptions, theorem or result statements, proofs or derivations, and worked examples only if they appear in the provided context.
+
+Present proofs, derivations, and example solutions step by step exactly as shown in the lecture material.
+
+Maintain a clear logical flow that allows a student to reliably revise the lecture using only this document.
+
+Follow a formal academic tone suitable for closed-notes exam preparation.
+
+Be clearly structured with appropriate section headings and organized progression of ideas.
+
+The lecture scribe must not:
+
+Add intuition, explanations, examples, or results that are not explicitly present in the provided context.
+
+Introduce creative rewriting, simplifications, summaries, or external knowledge.
+
+Include demonstrations, sample scribes, or reasoning instructions.
+
+Ensure strict correctness, completeness, and full alignment with the lecture and textbook materials.
