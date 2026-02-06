@@ -1,0 +1,259 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{setspace}
+\usepackage{enumitem}
+
+\setstretch{1.2}
+
+\begin{document}
+
+\begin{center}
+\textbf{\Large CSE400 -- Fundamentals of Probability in Computing} \\[0.2cm]
+\textbf{\large Lecture 7: Expectation, CDFs, PDFs and Problem Solving} \\[0.2cm]
+\textbf{Instructor:} Dhaval Patel, PhD \\
+\textbf{Date:} January 27, 2025
+\end{center}
+
+\vspace{0.5cm}
+
+\section*{1. Cumulative Distribution Function (CDF)}
+
+\subsection*{1.1 Definition of CDF}
+
+Let $(X)$ be a random variable.
+
+\[
+F_X(x) = \Pr(X \le x), \quad -\infty < x < \infty
+\]
+
+\begin{itemize}
+\item $(F_X(x))$ denotes the \textbf{Cumulative Distribution Function (CDF)} of random variable $(X)$.
+\item Most of the information about the random experiment described by the random variable $(X)$ is determined by the behavior of $(F_X(x))$.
+\end{itemize}
+
+\subsection*{1.2 Properties of CDF}
+
+For a valid CDF $(F_X(x))$, the following properties must hold:
+
+\begin{enumerate}[label=\arabic*.]
+\item \textbf{Boundedness}
+\[
+0 \le F_X(x) \le 1
+\]
+
+\item \textbf{Limits at infinity}
+\[
+F_X(-\infty) = 0
+\]
+\[
+F_X(\infty) = 1
+\]
+
+\item \textbf{Monotonicity}
+
+For $(x_1 < x_2)$,
+\[
+F_X(x_1) \le F_X(x_2)
+\]
+
+(Non-decreasing / monotonic increasing)
+
+\item \textbf{Probability over an interval}
+
+For $(x_1 < x_2)$,
+\[
+\Pr(x_1 < X \le x_2) = F_X(x_2) - F_X(x_1)
+\]
+\end{enumerate}
+
+\section*{2. CDF -- Example \#1}
+
+\subsection*{Problem:}
+
+\textbf{Find the valid CDF}
+
+\subsubsection*{(a)}
+
+\[
+F_X(x) = \frac{1}{2} + \frac{1}{\pi}\tan^{-1}(x)
+\]
+
+\begin{itemize}
+\item Satisfies:
+\begin{itemize}
+\item $(0 \le F_X(x) \le 1)$
+\item $(F_X(-\infty) = 0)$
+\item $(F_X(\infty) = 1)$
+\item Monotonic increasing
+\end{itemize}
+\end{itemize}
+
+\textbf{Valid CDF}
+
+\subsubsection*{(b)}
+
+\[
+F_X(x) = \left[1 - e^{-x}\right]u(x)
+\]
+
+\begin{itemize}
+\item $(u(x))$: Unit Step Function
+\item Defined as:
+\[
+u(x) =
+\begin{cases}
+0, & x < 0 \\
+1, & x \ge 0
+\end{cases}
+\]
+\end{itemize}
+
+\textbf{Valid CDF}
+
+\subsubsection*{(c)}
+
+\[
+F_X(x) = e^{-x^2}
+\]
+
+\textbf{Invalid CDF}
+
+(Does not satisfy required CDF properties)
+
+\subsubsection*{(d)}
+
+\[
+F_X(x) = x^2 u(x)
+\]
+
+\textbf{Invalid CDF}
+
+\section*{3. CDF -- Example \#2}
+
+\subsection*{Given:}
+
+\[
+F_X(x) = (1 - e^{-x})u(x)
+\]
+
+\subsection*{Find:}
+
+\subsubsection*{(a) $\Pr(X > 5)$}
+
+\[
+\Pr(X > 5) = 1 - \Pr(X \le 5)
+\]
+\[
+= 1 - F_X(5)
+\]
+\[
+= e^{-5}
+\]
+
+\subsubsection*{(b) $\Pr(X < 5)$}
+
+\[
+\Pr(X < 5) = F_X(5)
+\]
+
+\subsubsection*{(c) $\Pr(3 < X < 7)$}
+
+\[
+\Pr(3 < X < 7) = F_X(7) - F_X(3)
+\]
+
+\subsubsection*{(d) $\Pr(X > 5 \mid X < 7)$}
+
+Let:
+
+\begin{itemize}
+\item $(A = \{X > 5\})$
+\item $(B = \{X < 7\})$
+\end{itemize}
+
+\[
+\Pr(A \mid B) = \frac{\Pr(A \cap B)}{\Pr(B)}
+\]
+
+\[
+= \frac{\Pr(5 < X < 7)}{\Pr(X < 7)}
+\]
+
+\[
+= \frac{F_X(7) - F_X(5)}{F_X(7)}
+\]
+
+\section*{4. Probability Density Function (PDF)}
+
+\subsection*{4.1 Definition of PDF}
+
+For a \textbf{continuous random variable}, the PDF of $(X)$ evaluated at point $(x)$ is:
+
+\[
+f_X(x) = \lim_{\epsilon \to 0} \frac{\Pr(x \le X < x + \epsilon)}{\epsilon}
+\]
+
+\subsection*{4.2 PDF--CDF Relationship (Derivation)}
+
+Recall for a continuous range:
+
+\[
+\Pr(x \le X < x + \epsilon) = F_X(x + \epsilon) - F_X(x)
+\]
+
+Substitute into PDF definition:
+
+\[
+f_X(x) = \lim_{\epsilon \to 0} \frac{F_X(x + \epsilon) - F_X(x)}{\epsilon}
+\]
+
+Taking the limit:
+
+\[
+\boxed{f_X(x) = \frac{dF_X(x)}{dx}}
+\]
+
+\subsection*{4.3 Important Result}
+
+\begin{itemize}
+\item The \textbf{PDF of a random variable is the derivative of its CDF}
+\item Conversely, the \textbf{CDF of a random variable is the integral of its PDF}
+\end{itemize}
+
+\[
+F_X(x) = \int_{-\infty}^{x} f_X(t)\,dt
+\]
+
+\section*{5. Relationship Between PDF and CDF}
+
+\begin{itemize}
+\item Area under the PDF curve from $(-\infty)$ to $(x)$ gives $(F_X(x))$
+\item Graphical relationship shown in the slide:
+\begin{itemize}
+\item Shaded area under $(f_X(x))$ up to $(x_0)$ equals $(F_X(x_0))$
+\end{itemize}
+\end{itemize}
+
+\section*{6. Expectation of Random Variables}
+
+(Only headings present in slides -- content continues in later slides)
+
+\subsection*{Topics listed:}
+
+\begin{itemize}
+\item Definition and Example
+\item Expectation of a Function of RV
+\item Linear Operation with Expectation
+\item $(n^{\text{th}})$ Moments and Central Moments of RVs:
+\begin{itemize}
+\item Variance
+\item Skewness
+\item Kurtosis
+\end{itemize}
+\end{itemize}
+
+(Details appear in subsequent slides beyond the provided content)
+
+\end{document}
