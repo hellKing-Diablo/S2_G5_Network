@@ -1,0 +1,199 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{CSE400 -- Fundamentals of Probability in Computing\\
+Lecture 7: Expectation, CDFs, PDFs and Problem Solving}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Random Variables}
+
+A \textit{random variable (RV)} is a function that maps outcomes of a random experiment to real numbers.
+
+Random variables may be:
+\begin{itemize}
+    \item Discrete
+    \item Continuous
+\end{itemize}
+
+\section{Cumulative Distribution Function (CDF)}
+
+\subsection{Definition}
+
+The \textit{Cumulative Distribution Function (CDF)} of a random variable $X$ is defined as:
+\[
+F_X(x) = \Pr(X \le x)
+\]
+This definition applies to both discrete and continuous random variables.
+
+\subsection{Properties of the CDF}
+
+For any random variable $X$, the CDF satisfies:
+
+\begin{itemize}
+    \item \textbf{Non-decreasing property}
+    \[
+    F_X(x_1) \le F_X(x_2), \quad \text{for } x_1 < x_2
+    \]
+
+    \item \textbf{Right-continuity}
+    \[
+    \lim_{x \to a^+} F_X(x) = F_X(a)
+    \]
+
+    \item \textbf{Boundary conditions}
+    \[
+    \lim_{x \to -\infty} F_X(x) = 0
+    \]
+    \[
+    \lim_{x \to \infty} F_X(x) = 1
+    \]
+
+    \item \textbf{Probability of an interval}
+    \[
+    \Pr(a < X \le b) = F_X(b) - F_X(a)
+    \]
+\end{itemize}
+
+\subsection{Example of a CDF}
+
+An example CDF is typically illustrated using a step function for a discrete random variable or a smooth curve for a continuous random variable.  
+(The formula is stated without derivation.)
+
+\section{Probability Density Function (PDF)}
+
+\subsection{Definition}
+
+For a continuous random variable, the \textit{Probability Density Function (PDF)} $f_X(x)$ is defined as:
+\[
+f_X(x) = \frac{d}{dx} F_X(x)
+\]
+
+Conversely,
+\[
+F_X(x) = \int_{-\infty}^{x} f_X(t)\,dt
+\]
+
+\subsection{Properties of the PDF}
+
+\begin{itemize}
+    \item \textbf{Non-negativity}
+    \[
+    f_X(x) \ge 0 \quad \forall x
+    \]
+
+    \item \textbf{Total probability}
+    \[
+    \int_{-\infty}^{\infty} f_X(x)\,dx = 1
+    \]
+
+    \item \textbf{Probability over an interval}
+    \[
+    \Pr(a \le X \le b) = \int_{a}^{b} f_X(x)\,dx
+    \]
+\end{itemize}
+
+\subsection{Example of a PDF}
+
+An example PDF is illustrated graphically.  
+(The functional form is stated directly, without derivation.)
+
+\section{Expectation of Random Variables}
+
+\subsection{Definition of Expectation}
+
+The expectation (mean) of a random variable $X$ is defined as:
+
+\subsubsection*{Discrete Random Variable}
+\[
+E[X] = \sum_x x \Pr(X = x)
+\]
+
+\subsubsection*{Continuous Random Variable}
+\[
+E[X] = \int_{-\infty}^{\infty} x f_X(x)\,dx
+\]
+
+\subsection{Example of Expectation}
+
+Expectation is computed by directly applying the above formulas to the given PMF or PDF.  
+(No derivation is provided.)
+
+\section{Expectation of a Function of a Random Variable}
+
+Let $Y = g(X)$.
+
+\subsection*{Discrete Case}
+\[
+E[g(X)] = \sum_x g(x)\Pr(X = x)
+\]
+
+\subsection*{Continuous Case}
+\[
+E[g(X)] = \int_{-\infty}^{\infty} g(x) f_X(x)\,dx
+\]
+
+\section{Linear Operations with Expectation}
+
+Expectation satisfies linearity:
+\[
+E[aX + b] = aE[X] + b
+\]
+
+For two random variables $X$ and $Y$:
+\[
+E[X + Y] = E[X] + E[Y]
+\]
+
+This property holds regardless of dependence.
+
+\section{Moments of Random Variables}
+
+\subsection{$n^{\text{th}}$ Moment}
+
+The $n^{\text{th}}$ moment of $X$ about the origin is defined as:
+\[
+E[X^n]
+\]
+
+\subsection{Central Moments}
+
+The $n^{\text{th}}$ central moment is defined as:
+\[
+E[(X - \mu)^n]
+\]
+where $\mu = E[X]$.
+
+\section{Variance}
+
+The variance of a random variable $X$ is:
+\[
+\mathrm{Var}(X) = E[(X - \mu)^2]
+\]
+
+An equivalent form is:
+\[
+\mathrm{Var}(X) = E[X^2] - (E[X])^2
+\]
+
+\section{Skewness}
+
+Skewness is the third central moment, measuring asymmetry:
+\[
+E[(X - \mu)^3]
+\]
+
+\section{Kurtosis}
+
+Kurtosis is the fourth central moment, measuring peakedness:
+\[
+E[(X - \mu)^4]
+\]
+
+\end{document}
