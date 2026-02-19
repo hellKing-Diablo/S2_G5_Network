@@ -1,0 +1,47 @@
+Name: Devshree Patel
+Enrollment no. : AU2420116
+Group: 5
+Section: 2
+Prompt:Generate a lecture scribe intended to serve as exam-oriented reference material 
+for Lecture 12 of CSE 400: Fundamentals of Probability in Computing, 
+titled “Transformation of Random Variables”.
+
+Use ONLY the provided lecture slides and relevant textbook content as context. 
+Do not introduce any definitions, examples, derivations, notation, or results 
+that are not explicitly present in the provided material.
+
+The scribe must include, exactly as presented in the lecture:
+
+• The transformation of a single random variable Y = g(X)
+• Derivation of the CDF-based method for finding f_Y(y)
+• Treatment of monotonic increasing and monotonic decreasing transformations
+• Change of limits and inversion steps
+• The worked example where X is uniformly distributed and 
+  Y = sin(πX/2), including all intermediate derivation steps
+
+• Transformation involving two random variables
+• The case Z = X + Y
+• Derivation of F_Z(z) using joint PDF integration
+• Application of differentiation to obtain f_Z(z)
+• Use of Leibniz rule as shown in the lecture
+• The resulting convolution formula
+• The special case when X and Y are independent
+• The convolution expression for independent random variables
+
+• The case where X and Y are Normal random variables and the 
+  derivation showing that Z is also Normal
+• The case where X and Y are Exponential random variables and 
+  derivation of f_Z(z)
+• The transformation Z = X − Y
+• The transformation Z = X / Y with appropriate region analysis
+• The example involving R = sqrt(X^2 + Y^2), as presented
+
+Organize the scribe following the logical structure and progression of 
+the lecture. Clearly state all definitions, assumptions, limits of integration, 
+region descriptions, and intermediate algebraic steps exactly as shown in the 
+context.
+
+The scribe must be complete, rigorous, and suitable for revision for a 
+closed-notes examination. Do not simplify, shorten, or omit derivations.
+Do not add intuition or commentary beyond what appears in the lecture.
+Do not generate new examples.

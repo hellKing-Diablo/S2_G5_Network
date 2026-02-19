@@ -1,0 +1,306 @@
+\documentclass[11pt]{article}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setstretch{1.5}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor} 
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{L-12 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+    \normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+    \vspace{0.2cm}
+    \textbf{CSE 400: Fundamentals of Probability in Computing}\\
+    \Large Lecture L-12 Scribe
+}
+\author{} 
+\date{}
+
+\begin{document}
+\maketitle
+
+\vspace{-2cm}
+\begin{center}
+    \begin{tabular}{ll}
+        \textbf{Name:} & {Dhruv Dave \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Enrollment No:} & {AU2240096 \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Email:} & {dhruv.d2@ahduni.edu.in\hspace{2.1in}} \\ [1.5ex]
+        \textbf{Date:} & {February 12, 2026 \hspace{1.2in}}
+    \end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+\begin{center}
+    \textbf{Lecture L11--12: Transformation of Random Variables}\\
+    \textbf{Instructor:} Dhaval Patel, PhD
+\end{center}
+
+\section{Transformation of Random Variables}
+Let $X$ be a continuous random variable with known PDF $f_X(x)$ and CDF $F_X(x)$.\\
+Let
+\[
+Y = g(X)
+\]
+where $g(\cdot)$ is a monotonically increasing or monotonically decreasing function.
+
+\paragraph{Step 1: CDF of $Y$}
+\[
+F_Y(y) = \Pr(Y \le y)
+\]
+
+\noindent \textit{Case 1: $g(\cdot)$ is monotonically increasing}
+\[
+\begin{aligned}
+F_Y(y)
+&= \Pr(g(X) \le y) \\
+&= \Pr(X \le g^{-1}(y)) \\
+&= F_X(g^{-1}(y))
+\end{aligned}
+\]
+
+\noindent \textit{Case 2: $g(\cdot)$ is monotonically decreasing}
+\[
+\begin{aligned}
+F_Y(y)
+&= \Pr(g(X) \le y) \\
+&= \Pr(X \ge g^{-1}(y)) \\
+&= 1 - F_X(g^{-1}(y))
+\end{aligned}
+\]
+
+\paragraph{Step 2: PDF of $Y$}
+\[
+f_Y(y) = \frac{d}{dy} F_Y(y)
+\]
+
+\noindent For the decreasing case:
+\[
+\begin{aligned}
+f_Y(y)
+&= \frac{d}{dy}\left[1 - F_X(g^{-1}(y))\right] \\
+&= - f_X(g^{-1}(y)) \cdot \frac{d}{dy}\big[g^{-1}(y)\big]
+\end{aligned}
+\]
+
+\noindent \textbf{General Formula}
+\[
+\boxed{
+f_Y(y) = f_X(x)\left|\frac{dx}{dy}\right| \quad \text{evaluated at } x = g^{-1}(y)
+}
+\]
+
+\paragraph{Step 3: Change of Limits}
+The limits of $y$ are obtained by transforming the limits of $x$ using $y = g(x)$.
+
+\section{Worked Example: Single Random Variable Transformation}
+\textbf{Given:}\\
+$X$ is uniformly distributed on $(-1,1)$:
+\[
+f_X(x) =
+\begin{cases}
+\frac{1}{2}, & -1 < x < 1 \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+\noindent \textbf{Define:}
+\[
+Y = \sin\left(\frac{\pi X}{2}\right)
+\]
+
+\noindent \textbf{Solution}\\
+Inverse transformation:
+\[
+x = \frac{2}{\pi}\sin^{-1}(y)
+\]
+Derivative:
+\[
+\frac{dx}{dy} = \frac{2}{\pi}\cdot\frac{1}{\sqrt{1-y^2}}
+\]
+PDF of $Y$:
+\[
+\begin{aligned}
+f_Y(y)
+&= f_X(x)\left|\frac{dx}{dy}\right| \\
+&= \frac{1}{2} \cdot \frac{2}{\pi\sqrt{1-y^2}} \\
+&= \frac{1}{\pi\sqrt{1-y^2}}, \quad -1 < y < 1
+\end{aligned}
+\]
+
+\section{Function of Two Random Variables}
+Let
+\[
+Z = X + Y
+\]
+
+\noindent \textbf{Objective}
+\begin{itemize}
+    \item Find $f_Z(z)$
+    \item Find $f_Z(z)$ when $X$ and $Y$ are independent
+    \item Let $X \sim \mathcal{N}(0,1)$, $Y \sim \mathcal{N}(0,1)$, prove $Z \sim \mathcal{N}(0,2)$
+    \item If $X$ and $Y$ are exponential RVs with parameter $\lambda$, find $f_Z(z)$
+\end{itemize}
+
+\section{CDF Method for $Z = X + Y$}
+\[
+F_Z(z) = \Pr(Z \le z) = \Pr(X + Y \le z)
+\]
+\[
+F_Z(z) = \iint_{x+y\le z} f_{XY}(x,y)\,dx\,dy
+\]
+Equivalent integral form:
+\[
+F_Z(z)
+= \int_{-\infty}^{\infty}
+\int_{-\infty}^{z-y}
+f_{XY}(x,y)\,dx\,dy
+\]
+
+\section{Leibniz Rule}
+Let
+\[
+G(x) = \int_{a(x)}^{b(x)} h(x,y)\,dy
+\]
+Then:
+\[
+\frac{dG(x)}{dx} =
+\frac{db(x)}{dx}h(x,b(x)) -
+\frac{da(x)}{dx}h(x,a(x))
++
+\int_{a(x)}^{b(x)} \frac{\partial}{\partial x}h(x,y)\,dy
+\]
+
+\section{PDF of $Z$}
+\[
+\begin{aligned}
+f_Z(z)
+&= \frac{d}{dz}F_Z(z) \\
+&= \int_{-\infty}^{\infty} f_{XY}(z-y,y)\,dy
+\end{aligned}
+\]
+Equivalent form:
+\[
+\boxed{
+f_Z(z) = \int_{-\infty}^{\infty} f_{XY}(x,z-x)\,dx
+}
+\]
+
+\section{Independent Case (Convolution)}
+If $X$ and $Y$ are independent:
+\[
+f_{XY}(x,y) = f_X(x)f_Y(y)
+\]
+\[
+\boxed{
+f_Z(z) = \int_{-\infty}^{\infty} f_X(x)f_Y(z-x)\,dx
+}
+\]
+This is the convolution integral.
+
+\section{Gaussian Example}
+\textbf{Given:}
+\[
+X \sim \mathcal{N}(0,1), \quad Y \sim \mathcal{N}(0,1)
+\]
+\[
+f_X(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}, \quad
+f_Y(y) = \frac{1}{\sqrt{2\pi}}e^{-y^2/2}
+\]
+\[
+\begin{aligned}
+f_Z(z)
+&= \int_{-\infty}^{\infty}
+\frac{1}{\sqrt{2\pi}}e^{-x^2/2}
+\cdot
+\frac{1}{\sqrt{2\pi}}e^{-(z-x)^2/2}
+\,dx \\
+&= \frac{1}{2\pi}
+\int_{-\infty}^{\infty}
+e^{-\frac{(x-\frac{z}{2})^2}{1}}
+e^{-\frac{z^2}{4}}
+\,dx
+\end{aligned}
+\]
+Final result:
+\[
+f_Z(z) = \frac{1}{\sqrt{2\pi(2)}}e^{-z^2/(2\cdot2)}
+\]
+\[
+\boxed{
+Z \sim \mathcal{N}(0,2)
+}
+\]
+
+\section{Exponential Example}
+\textbf{Let:}
+\[
+f_X(x) = \lambda e^{-\lambda x}, \quad x>0
+\]
+\[
+f_Y(y) = \lambda e^{-\lambda y}, \quad y>0
+\]
+\[
+\begin{aligned}
+f_Z(z)
+&= \int_{-\infty}^{\infty}
+\lambda e^{-\lambda x}
+\cdot
+\lambda e^{-\lambda(z-x)}
+u(x)u(z-x)\,dx \\
+&= \lambda^2 e^{-\lambda z}
+\int_0^z dx \\
+&= \lambda^2 z e^{-\lambda z}, \quad z>0
+\end{aligned}
+\]
+
+\section{Additional Transformations}
+\textbf{Case: $Z = X - Y$}
+\[
+F_Z(z) = \Pr(X - Y \le z)
+\]
+\[
+f_Z(z) = \frac{d}{dz}F_Z(z)
+\]
+\textit{(Same procedure as $Z = X + Y$)}
+
+\vspace{0.3cm}
+\noindent \textbf{Case: $Z = \frac{X}{Y}$}
+\[
+F_Z(z) = \Pr\left(\frac{X}{Y} \le z\right)
+\]
+Separate cases:
+\begin{itemize}
+    \item $Y > 0$
+    \item $Y < 0$
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent \textbf{Example Mentioned}
+\[
+R = \sqrt{X^2 + Y^2}
+\]
+Find $f_R(r)$ \\
+\textit{(No derivation provided in slides.)}
+
+\noindent
+\bigskip
+\hrule
+\vspace{0.2cm}
+\begin{center}
+    \small \textit{End of Lecture 12 Scribe}
+\end{center}
+
+\end{document}

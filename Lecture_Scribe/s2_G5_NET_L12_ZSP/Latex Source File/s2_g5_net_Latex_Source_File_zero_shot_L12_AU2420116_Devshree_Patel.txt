@@ -1,0 +1,381 @@
+\documentclass[11pt]{article}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setstretch{1.5}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor} 
+%\usepackage{fontspec}  % XeLaTeX or LuaLaTeX
+
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{L12 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+    \normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+    \vspace{0.2cm}
+    \textbf{CSE 400: Fundamentals of Probability in Computing}\\
+    \Large Lecture 12 Scribe
+}
+\author{} 
+\date{}
+
+\begin{document}
+\maketitle
+
+\vspace{-2cm}
+\begin{center}
+    \begin{tabular}{ll}
+        \textbf{Name:} & {Devshree Patel \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Enrollment No:} & {AU2420116 \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Email:} & {devshree.p1@ahduni.edu.in\hspace{2.1in}} \\ [1.5ex]
+        \textbf{Date of Submission:} & {February 19\textsuperscript{th}, 2026 (11:59 PM) \hspace{1.2in}}
+    \end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+\section*{1. Transformation of a Single Random Variable}
+
+Let $X$ be a continuous random variable with PDF $f_X(x)$ and CDF $F_X(x)$.
+
+Define
+\[
+Y = g(X)
+\]
+
+Goal: Determine $F_Y(y)$ and $f_Y(y)$.
+
+\subsection*{CDF Method}
+
+\[
+F_Y(y) = P(Y \leq y) = P(g(X) \leq y)
+\]
+
+\subsubsection*{Case 1: $g(\cdot)$ Monotonically Increasing}
+
+\[
+g(X) \leq y \iff X \leq g^{-1}(y)
+\]
+
+\[
+F_Y(y) = P(X \leq g^{-1}(y)) = F_X(g^{-1}(y))
+\]
+
+Differentiating w.r.t. $y$,
+
+\[
+f_Y(y) = \frac{d}{dy} F_X(g^{-1}(y))
+\]
+
+Using chain rule,
+
+\[
+f_Y(y) = f_X(g^{-1}(y)) \cdot \frac{d}{dy} g^{-1}(y)
+\]
+
+Equivalently,
+
+\[
+f_Y(y) = f_X(x)\left|\frac{dx}{dy}\right|_{x = g^{-1}(y)}
+\]
+
+\subsubsection*{Case 2: $g(\cdot)$ Monotonically Decreasing}
+
+\[
+g(X) \leq y \iff X \geq g^{-1}(y)
+\]
+
+\[
+F_Y(y) = P(X \geq g^{-1}(y)) = 1 - F_X(g^{-1}(y))
+\]
+
+Differentiating,
+
+\[
+f_Y(y) = - f_X(g^{-1}(y)) \frac{d}{dy} g^{-1}(y)
+\]
+
+Since derivative is negative,
+
+\[
+f_Y(y) = f_X(x)\left|\frac{dx}{dy}\right|_{x = g^{-1}(y)}
+\]
+
+\subsection*{Change of Limits and Inversion Steps}
+
+\begin{enumerate}
+\item Express $y = g(x)$
+\item Invert to obtain $x = g^{-1}(y)$
+\item Compute $\dfrac{dx}{dy}$
+\item Change support using transformed endpoints
+\end{enumerate}
+
+\subsection*{Worked Example}
+
+Let
+\[
+X \sim \text{Uniform}(-1,1)
+\]
+
+\[
+f_X(x) =
+\begin{cases}
+\frac{1}{2}, & -1 < x < 1 \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+Define
+\[
+Y = \sin\left(\frac{\pi X}{2}\right)
+\]
+
+\textbf{Step 1: Invert}
+
+\[
+y = \sin\left(\frac{\pi x}{2}\right)
+\]
+
+\[
+x = \frac{2}{\pi}\sin^{-1}(y)
+\]
+
+\textbf{Step 2: Derivative}
+
+\[
+\frac{dx}{dy} = \frac{2}{\pi} \cdot \frac{1}{\sqrt{1-y^2}}
+\]
+
+\textbf{Step 3: Support}
+
+When $x=-1$,
+\[
+y = \sin(-\pi/2) = -1
+\]
+
+When $x=1$,
+\[
+y = \sin(\pi/2) = 1
+\]
+
+Thus,
+\[
+-1 < y < 1
+\]
+
+\textbf{Step 4: PDF}
+
+\[
+f_Y(y) = f_X(x)\left|\frac{dx}{dy}\right|
+\]
+
+\[
+f_Y(y) = \frac{1}{2} \cdot \frac{2}{\pi \sqrt{1-y^2}}
+\]
+
+\[
+f_Y(y) = \frac{1}{\pi \sqrt{1-y^2}}, \quad -1<y<1
+\]
+
+\section*{2. Transformation of Two Random Variables}
+
+Let $X$ and $Y$ be continuous random variables.
+
+Define
+\[
+Z = X + Y
+\]
+
+\subsection*{CDF of $Z$}
+
+\[
+F_Z(z) = P(Z \leq z)
+\]
+
+\[
+F_Z(z) = P(X + Y \leq z)
+\]
+
+\[
+F_Z(z) = \iint_{x+y \leq z} f_{XY}(x,y)\, dx\, dy
+\]
+
+Rewriting,
+
+\[
+F_Z(z) = \int_{-\infty}^{\infty} \int_{-\infty}^{z-y}
+f_{XY}(x,y)\, dx\, dy
+\]
+
+Differentiating,
+
+\[
+f_Z(z) = \frac{d}{dz} F_Z(z)
+\]
+
+\subsection*{Leibniz Rule}
+
+If
+\[
+G(z) = \int_{a(z)}^{b(z)} h(z,y)\, dy
+\]
+
+Then
+
+\[
+\frac{dG}{dz}
+= h(z,b(z))\frac{db}{dz}
+- h(z,a(z))\frac{da}{dz}
++ \int_{a(z)}^{b(z)} \frac{\partial}{\partial z} h(z,y)\, dy
+\]
+
+Applying,
+
+\[
+f_Z(z)
+= \int_{-\infty}^{\infty} f_{XY}(z-y,y)\, dy
+\]
+
+Alternatively,
+
+\[
+f_Z(z)
+= \int_{-\infty}^{\infty} f_{XY}(x,z-x)\, dx
+\]
+
+\subsection*{Independent Case (Convolution)}
+
+If $X$ and $Y$ are independent,
+
+\[
+f_{XY}(x,y) = f_X(x)f_Y(y)
+\]
+
+Thus,
+
+\[
+f_Z(z) = \int_{-\infty}^{\infty}
+f_X(x)f_Y(z-x)\, dx
+\]
+
+This is the convolution integral.
+
+\section*{3. Special Cases}
+
+\subsection*{(i) Normal Random Variables}
+
+Let
+\[
+X \sim N(0,1), \quad Y \sim N(0,1)
+\]
+
+Independent.
+
+Using convolution,
+
+\[
+f_Z(z) = \int_{-\infty}^{\infty}
+\frac{1}{\sqrt{2\pi}} e^{-x^2/2}
+\frac{1}{\sqrt{2\pi}} e^{-(z-x)^2/2} dx
+\]
+
+Simplifying exponent,
+
+\[
+x^2 + (z-x)^2
+= 2x^2 - 2zx + z^2
+= 2\left(x - \frac{z}{2}\right)^2 + \frac{z^2}{2}
+\]
+
+Thus,
+
+\[
+f_Z(z) = \frac{1}{\sqrt{4\pi}}
+e^{-z^2/4}
+\]
+
+Hence,
+\[
+Z \sim N(0,2)
+\]
+
+\subsection*{(ii) Exponential Random Variables}
+
+Let
+
+\[
+f_X(x) = \lambda e^{-\lambda x}, \quad x>0
+\]
+
+\[
+f_Y(y) = \lambda e^{-\lambda y}, \quad y>0
+\]
+
+Using convolution,
+
+\[
+f_Z(z) = \int_0^z
+\lambda e^{-\lambda x}
+\lambda e^{-\lambda(z-x)} dx
+\]
+
+\[
+f_Z(z) = \lambda^2 e^{-\lambda z} \int_0^z dx
+\]
+
+\[
+f_Z(z) = \lambda^2 z e^{-\lambda z}, \quad z>0
+\]
+
+\[
+=0, \quad \text{otherwise}
+\]
+
+\section*{4. Other Transformations}
+
+\subsection*{(a) $Z = X - Y$}
+
+\[
+F_Z(z) = P(X - Y \leq z)
+\]
+
+\[
+F_Z(z) = \iint_{x-y \leq z} f_{XY}(x,y)\, dx\, dy
+\]
+
+\[
+f_Z(z) = \frac{d}{dz}F_Z(z)
+\]
+
+Procedure same as $Z = X + Y$.
+
+\subsection*{(b) $Z = \frac{X}{Y}$}
+
+\[
+F_Z(z) = P\left(\frac{X}{Y} \leq z\right)
+\]
+
+Region depends on sign of $Y$.
+
+If $Y>0$, inequality direction preserved.
+
+If $Y<0$, inequality reverses.
+
+Integration region must be split accordingly.
+
+\subsection*{(c) Example: $R = \sqrt{X^2 + Y^2}$}
+
+Region corresponds to circular geometry as shown in lecture.
+
+\end{document}
