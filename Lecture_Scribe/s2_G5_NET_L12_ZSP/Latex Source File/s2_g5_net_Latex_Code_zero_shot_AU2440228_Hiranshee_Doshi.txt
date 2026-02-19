@@ -1,0 +1,200 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{CSE400 - Fundamentals of Probability in Computing \\ Lecture 12: Transformation of Random Variables}
+
+\author{Instructor: Dhaval Patel, PhD \\ SEAS - Ahmedabad University}
+\date{February 12, 2026}
+
+\begin{document}
+
+\maketitle
+
+
+\noindent \textbf{Topic:} Lecture 12: Transformation of Random Variables
+
+
+\section*{1. Transformation of Random Variables}
+\textbf{Objective:} To learn transformation techniques for random variables.
+
+
+\subsection*{Definition: Transformation of a Random Variable}
+Let $X$ be a random variable with known distribution. \\
+Let
+\begin{equation*}
+Z = g(X)
+\end{equation*}
+where $g(\cdot)$ is a function of $X$. \\
+The problem is to determine the distribution of $Z$.
+
+
+\subsection*{Goal}
+Given the distribution of $X$, determine:
+\begin{itemize}
+    \item The cumulative distribution function (CDF) of $Z$, denoted $F_{Z}(z)$
+    \item The probability density function (PDF) of $Z$, denoted $f_{Z}(z)$, if applicable
+\end{itemize}
+
+
+\subsection*{Method: CDF Technique}
+The distribution of $Z$ can be obtained using: \\
+Since $Z = g(X)$, we write:
+\begin{align*}
+F_{Z}(z) &= P(Z \le z) \\
+F_{Z}(z) &= P(g(X) \le z)
+\end{align*}
+The inequality is converted into a condition on $X$. Then, use the known distribution of $X$ to evaluate the probability.
+
+\subsection*{PDF from CDF}
+If $Z$ is continuous, then:
+\begin{equation*}
+f_{Z}(z) = \frac{d}{dz}F_{Z}(z)
+\end{equation*}
+
+
+\subsection*{Key Idea}
+To find the distribution of a transformed random variable:
+\begin{enumerate}
+    \item Express $F_{Z}(z) = P(g(X) \le z)$
+    \item Rewrite the event in terms of $X$
+    \item Use the known distribution of $X$
+    \item Differentiate to obtain the PDF (if continuous)
+\end{enumerate}
+
+\section*{2. Function of Two Random Variables}
+\textbf{Objective:} To study joint transformations and derived distributions.
+
+\subsection*{Definition}
+Let $X$ and $Y$ be two random variables with joint distribution:
+\begin{equation*}
+f_{X,Y}(x,y)
+\end{equation*}
+Let
+\begin{equation*}
+Z = g(X,Y)
+\end{equation*}
+The problem is to determine the distribution of $Z$.
+
+\subsection*{Distribution of $Z$}
+The cumulative distribution function is:
+\begin{equation*}
+F_{Z}(z) = P(Z \le z)
+\end{equation*}
+Substituting $Z = g(X,Y)$
+\begin{equation*}
+F_{Z}(z) = P(g(X,Y) \le z)
+\end{equation*}
+This probability is evaluated using the joint distribution of $X$ and $Y$.
+
+
+\subsubsection*{If $X$ and $Y$ are Continuous}
+\begin{equation*}
+F_{Z}(z) = \iint_{g(x,y) \le z} f_{X,Y}(x,y)dx\,dy
+\end{equation*}
+If required, the PDF is obtained by differentiating:
+\begin{equation*}
+f_{Z}(z) = \frac{d}{dz}F_{Z}(z)
+\end{equation*}
+
+
+\subsubsection*{If $X$ and $Y$ are Independent}
+If $X$ and $Y$ are independent:
+\begin{equation*}
+f_{X,Y}(x,y) = f_{X}(x)f_{Y}(y)
+\end{equation*}
+This simplifies computation.
+
+
+\section*{3. Illustrative Example: $Z = X + Y$}
+\textbf{Problem} \\
+Let:
+\begin{equation*}
+Z = X + Y
+\end{equation*}
+Determine the distribution of $Z$.
+
+\subsection*{Step 1: CDF of $Z$}
+\begin{equation*}
+F_{Z}(z) = P(Z \le z)
+\end{equation*}
+Substitute:
+\begin{equation*}
+F_{Z}(z) = P(X + Y \le z)
+\end{equation*}
+
+
+\subsection*{Step 2: Continuous Case}
+If $X$ and $Y$ are continuous:
+\begin{equation*}
+F_{Z}(z) = \iint_{x+y \le z} f_{X,Y}(x,y)dx\,dy
+\end{equation*}
+
+
+\subsection*{Step 3: PDF of $Z$}
+Differentiate:
+\begin{equation*}
+f_{Z}(z) = \frac{d}{dz}F_{Z}(z)
+\end{equation*}
+
+
+\subsection*{Convolution Formula (When Independent)}
+If $X$ and $Y$ are independent:
+\begin{equation*}
+f_{X,Y}(x,y) = f_{X}(x)f_{Y}(y)
+\end{equation*}
+Then the PDF of $Z = X + Y$ becomes:
+\begin{equation*}
+f_{Z}(z) = \int_{-\infty}^{\infty} f_{X}(x)f_{Y}(z-x)dx
+\end{equation*}
+This is called the convolution of $f_{X}$ and $f_{Y}$.
+
+
+\subsection*{Final Result for Sum of Independent RVs}
+\begin{equation*}
+f_{Z}(z) = (f_{X} * f_{Y})(z)
+\end{equation*}
+where
+\begin{equation*}
+(f_{X} * f_{Y})(z) = \int_{-\infty}^{\infty} f_{X}(x)f_{Y}(z-x)dx
+\end{equation*}
+
+
+\section*{Summary of Lecture}
+\textbf{1. Transformation of One Random Variable} \\
+Define $Z = g(X)$ \\
+Use:
+\begin{equation*}
+F_{Z}(z) = P(g(X) \le z)
+\end{equation*}
+Obtain PDF by differentiation.
+
+
+\textbf{2. Function of Two Random Variables} \\
+Define $Z = g(X,Y)$ \\
+Use:
+\begin{equation*}
+F_{Z}(z) = P(g(X,Y) \le z)
+\end{equation*}
+For continuous case:
+\begin{equation*}
+F_{Z}(z) = \iint_{g(x,y) \le z} f_{X,Y}(x,y)dx\,dy
+\end{equation*}
+
+
+\textbf{3. Special Case: $Z = X + Y$} \\
+CDF:
+\begin{equation*}
+F_{Z}(z) = P(X + Y \le z)
+\end{equation*}
+If independent:
+\begin{equation*}
+f_{Z}(z) = \int_{-\infty}^{\infty} f_{X}(x)f_{Y}(z-x)dx
+\end{equation*}
+This is convolution.
+
+
+\vspace{1cm}
+\noindent \textit{End of Lecture 12 Scribe}
+
+\end{document}
