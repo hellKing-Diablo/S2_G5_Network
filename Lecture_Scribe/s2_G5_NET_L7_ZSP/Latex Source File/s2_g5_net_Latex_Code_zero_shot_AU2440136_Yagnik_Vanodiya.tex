@@ -1,0 +1,208 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+
+% Page layout settings
+\geometry{a4paper, margin=1in}
+
+% Header settings
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE400: Fundamentals of Probability in Computing}
+\rhead{Lecture 7 Scribe}
+\rfoot{Page \thepage}
+
+\title{\textbf{Lecture 7: Expectation, CDFs, PDFs and Problem Solving}}
+\author{Instructor: Dhaval Patel, PhD \\ Scribed from Lecture Slides}
+\date{January 27, 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{The Cumulative Distribution Function (CDF)}
+
+\subsection{Intuition: Water Tank Analogy}
+The Cumulative Distribution Function (CDF) can be intuitively understood using a water tank analogy.
+\begin{itemize}
+    \item Let the height $h$ of the water in a cylindrical tank represent the value of a random variable.
+    \item The volume of the water in the tank up to height $h$, denoted by $V(h)$, corresponds to the cumulative probability up to that value.
+\end{itemize}
+For a cylinder with radius $R$, the volume is given by:
+$$ V(h) = \int_{0}^{h} (\pi R^{2}) dh = (\pi R^{2})h $$
+Here:
+\begin{itemize}
+    \item $\pi R^{2}$ is analogous to the Probability Density Function (PDF) of a uniform distribution.
+    \item The maximum volume of the tank, $V(H) = \pi R^{2}H$, is analogous to 1 (total probability).
+\end{itemize}
+
+\subsection{Definition and Properties}
+\textbf{Definition:} The CDF of a random variable $X$ is defined as:
+$$ F_{X}(x) = \Pr(X \le x), \quad -\infty < x < \infty $$
+Most of the information about the random experiment described by the random variable (RV) $X$ is determined by the behavior of $F_{X}(x)$.
+
+\textbf{Properties of CDF:}
+\begin{enumerate}
+    \item \textbf{Bounds:} $0 \le F_{X}(x) \le 1$.
+    \item \textbf{Limits:}
+    $$ F_{X}(-\infty) = 0, \quad F_{X}(\infty) = 1 $$
+    \item \textbf{Monotonicity:} For $x_{1} < x_{2}$,
+    $$ F_{X}(x_{1}) \le F_{X}(x_{2}) $$
+    (The CDF is a non-decreasing function).
+    \item \textbf{Interval Probability:} For $x_{1} < x_{2}$, the probability that $X$ lies in the interval $(x_1, x_2]$ is:
+    $$ \Pr(x_{1} < X \le x_{2}) = F_{X}(x_{2}) - F_{X}(x_{1}) $$
+\end{enumerate}
+
+\subsection{Example \#1: Valid CDFs}
+Determine which of the following functions are valid CDFs based on the properties (specifically boundary conditions and monotonicity):
+
+\begin{enumerate}
+    \item $F_{X}(x) = \frac{1}{2} + \frac{1}{\pi}\tan^{-1}(x)$
+    \begin{itemize}
+        \item \textbf{Valid.} Range is $[0, 1]$ as $x \to \pm \infty$.
+    \end{itemize}
+    
+    \item $F_{X}(x) = [1 - e^{-x}]u(x)$
+    \begin{itemize}
+        \item \textbf{Valid.} Standard exponential distribution form.
+    \end{itemize}
+    
+    \item $F_{X}(x) = x^2 u(x)$
+    \begin{itemize}
+        \item \textbf{Invalid.} As $x \to \infty$, $F_X(x) \to \infty$, violating the property $F_X(\infty)=1$.
+    \end{itemize}
+
+    \item $F_{X}(x) = e^{-x^{2}}$
+    \begin{itemize}
+        \item \textbf{Invalid.} As $x \to \infty$, $F_X(x) \to 0$, violating the property $F_X(\infty)=1$.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Example \#2: Calculations with CDF}
+Suppose a random variable has a CDF given by:
+$$ F_{X}(x) = (1 - e^{-x})u(x) $$
+Compute the following probabilities:
+
+1. \textbf{Probability} $\Pr(X > 5)$:
+   $$ \Pr(X > 5) = 1 - \Pr(X \le 5) = 1 - F_{X}(5) = 1 - (1 - e^{-5}) = e^{-5} $$
+
+2. \textbf{Conditional Probability} $\Pr(X > 5 \mid X < 7)$:
+   $$ \Pr(X > 5 \mid X < 7) = \frac{\Pr(5 < X < 7)}{\Pr(X < 7)} = \frac{F_X(7) - F_X(5)}{F_X(7)} $$
+   Substituting the CDF values:
+   $$ = \frac{(1 - e^{-7}) - (1 - e^{-5})}{1 - e^{-7}} = \frac{e^{-5} - e^{-7}}{1 - e^{-7}} $$
+
+\section{The Probability Density Function (PDF)}
+
+\subsection{PDF-CDF Relationship for Continuous Random Variables}
+The PDF of a random variable $X$ evaluated at point $x$ is defined as the limit:
+$$ f_{X}(x) = \lim_{\epsilon \to 0} \frac{\Pr(x \le X < x + \epsilon)}{\epsilon} $$
+Recall that for a continuous range:
+$$ \Pr(x \le X < x + \epsilon) = F_{X}(x + \epsilon) - F_{X}(x) $$
+Therefore, the PDF is the derivative of the CDF:
+$$ f_{X}(x) = \lim_{\epsilon \to 0} \frac{F_{X}(x + \epsilon) - F_{X}(x)}{\epsilon} = \frac{dF_{X}(x)}{dx} $$
+
+\textbf{Relationship Summary:}
+\begin{itemize}
+    \item The PDF is the derivative of the CDF:
+    $$ f_{X}(x) = \frac{dF_{X}(x)}{dx} $$
+    \item Conversely, the CDF is the integral of the PDF:
+    $$ F_{X}(x) = \int_{-\infty}^{x} f_{X}(y) dy $$
+\end{itemize}
+
+\subsection{Properties of PDF}
+\begin{enumerate}
+    \item \textbf{Non-negativity:} $f_{X}(x) \ge 0$.
+    \item \textbf{Normalization (Total Probability):} The total area under the PDF curve is 1.
+    $$ \int_{-\infty}^{\infty} f_{X}(x) dx = 1 $$
+    \item \textbf{Interval Probability:} The probability that $X$ falls between $a$ and $b$ is the area under the curve from $a$ to $b$.
+    $$ \Pr(a < X \le b) = \int_{a}^{b} f_{X}(x) dx $$
+\end{enumerate}
+Graphically, $F_X(x_0)$ represents the area under the curve $f_X(x)$ from $-\infty$ to $x_0$.
+
+\subsection{Example \#1: Valid PDFs}
+Identify valid PDFs from the following expressions:
+\begin{enumerate}
+    \item $f_{X}(x) = e^{-x}u(x)$
+    \begin{itemize}
+        \item \textbf{Valid.} $\int_0^\infty e^{-x}dx = 1$.
+    \end{itemize}
+    \item $f_{X}(x) = e^{-|x|}$
+    \begin{itemize}
+        \item \textbf{Note:} $\int_{-\infty}^{\infty} e^{-|x|} dx = 2$. This requires normalization (multiplication by $1/2$) to be a valid PDF.
+    \end{itemize}
+    \item $f_{X}(x) = \begin{cases} \frac{3}{4}(x^2 - 1), & |x| < 2 \\ 0, & \text{otherwise} \end{cases}$
+    \item $f_{X}(x) = \begin{cases} 1, & 0 \le x < 1 \\ 0, & \text{otherwise} \end{cases}$
+    \item $f_{X}(x) = 2xe^{-x^{2}}u(x)$
+\end{enumerate}
+
+\subsection{Example \#2: Derivations}
+\textbf{From CDF to PDF:}
+A random variable $X$ has a CDF given by $F_{X}(x) = (1 - e^{-\lambda x})u(x)$. Its PDF is:
+$$ f_{X}(x) = \frac{dF_{X}(x)}{dx} = \frac{d}{dx}(1 - e^{-\lambda x}) = \lambda e^{-\lambda x}u(x) $$
+
+\textbf{From PDF to CDF:}
+A random variable has a PDF given by $f_{X}(x) = 2xe^{-x^{2}}u(x)$. Its CDF is:
+$$ F_{X}(x) = \int_{-\infty}^{x} f_{X}(y) dy = \int_{0}^{x} 2ye^{-y^{2}} dy $$
+Using integration techniques (substitution), the result is:
+$$ F_{X}(x) = (1 - e^{-x^{2}})u(x) $$
+
+\section{Expectation and Moments}
+
+\subsection{Definitions}
+The expectation (or mean) is defined based on the type of random variable:
+\begin{itemize}
+    \item \textbf{Discrete Random Variable (DRV):}
+    $$ E[X] = \sum_{k} x_{k} P_{X}(x_{k}) $$
+    \item \textbf{Continuous Random Variable (CRV):}
+    $$ E[X] = \int_{-\infty}^{\infty} x f_{X}(x) dx $$
+\end{itemize}
+
+\subsection{$n^{th}$ Moments}
+The $n^{th}$ moment of a random variable $X$ is defined as $E[X^n]$.
+\begin{itemize}
+    \item \textbf{DRV:} $E[X^n] = \sum_{k} x_{k}^{n} P_{X}(x_{k})$
+    \item \textbf{CRV:} $E[X^n] = \int_{-\infty}^{\infty} x^{n} f_{X}(x) dx$
+\end{itemize}
+
+\textbf{Specific Moments:}
+\begin{itemize}
+    \item \textbf{$n=0$:} $E[X^0] = E[1] = 1$.
+    \item \textbf{$n=1$:} $E[X] = \mu_X$ (The Mean).
+    \item \textbf{$n=2$:} $E[X^2]$ (The Second Moment, used in variance calculation).
+\end{itemize}
+
+\subsection{Central Moments}
+The $n^{th}$ central moment is defined as $E[(X - \mu_X)^n]$. This measures the deviation from the mean.
+
+\subsubsection{Variance ($n=2$ Central Moment)}
+The variance $\sigma_X^2$ is the second central moment:
+$$ \sigma_{X}^{2} = E[(X - \mu_{X})^{2}] $$
+
+\textbf{Derivation of Variance Formula:}
+Using the linearity of expectation:
+\begin{align*}
+E[(X - \mu_{X})^{2}] &= E[X^2 - 2X\mu_X + \mu_X^2] \\
+&= E[X^2] - 2\mu_X E[X] + \mu_X^2 \\
+&= E[X^2] - 2\mu_X (\mu_X) + \mu_X^2 \\
+&= E[X^2] - 2\mu_X^2 + \mu_X^2 \\
+\sigma_{X}^{2} &= E[X^2] - \mu_X^2
+\end{align*}
+
+\subsubsection{Higher Order Statistics}
+\begin{itemize}
+    \item \textbf{Skewness ($n=3$):} Related to the 3rd central moment. Measures asymmetry.
+    \item \textbf{Kurtosis ($n=4$):} Related to the 4th central moment. Measures "tailedness".
+\end{itemize}
+
+\subsection{Properties of Expectation}
+Expectation is a linear operation. For a constant $a$ and random variable $X$:
+\begin{itemize}
+    \item $E[X - \mu_X] = E[X] - E[\mu_X] = \mu_X - \mu_X = 0$ (The first central moment is zero).
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,20 @@
+Name- Devshree Patel
+Enrolment number -AU2420116
+section-2
+Group-s2_g5_net
+
+Prompt:
+Generate a lecture scribe intended to serve as exam-oriented reference material
+for Lecture 7 of CSE 400: Fundamentals of Probability in Computing.
+
+Use ONLY the provided context (lecture slides and relevant textbook content).
+Do not introduce any material, examples, explanations, or notation that do not
+appear explicitly in the provided context.
+
+Include all definitions, notation, assumptions, theorem or result statements,
+proofs or derivations, and worked examples exactly as presented in the lecture
+materials and textbook, and exclude anything that was not covered.
+
+Organize the scribe in a clear, logical structure that follows the flow of the
+lecture, using appropriate section headings so that it can be reliably used
+for revision for a closed-notes examination.
