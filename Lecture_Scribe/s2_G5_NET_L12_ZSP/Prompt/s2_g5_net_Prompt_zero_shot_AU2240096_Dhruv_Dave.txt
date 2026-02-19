@@ -1,0 +1,67 @@
+Act as a university lecture transcription specialist. You will receive Lecture 12 slides in PDF format. Convert the slides into a complete written lecture scribe for exam revision.
+ 
+Follow these constraints strictly:
+ 
+Source fidelity
+ 
+ 
+- Treat the lecture slides as the only valid source.
+ 
+- Do not rely on outside knowledge, assumptions, or prior training information.
+ 
+- If information is not explicitly present in the slides, it must not appear in the scribe.
+ 
+
+ 
+Content coverage
+ 
+Extract and document all material present in the slides, including:
+ 
+ 
+- Definitions and terminology
+ 
+- Symbols and notation
+ 
+- Assumptions and statements of results or theorems
+ 
+- Mathematical formulas and properties
+ 
+- Proofs and derivations
+ 
+- Worked examples and solution steps
+ 
+
+ 
+Reconstruction rules
+ 
+ 
+- Reproduce proofs, derivations, and example solutions exactly as shown.
+ 
+- Present all mathematical steps in the same order as the slides.
+ 
+- Do not summarize, interpret, simplify, or expand the material.
+ 
+
+ 
+Document organization
+ 
+ 
+- Arrange the scribe using clear section headings that follow the lecture flow.
+ 
+- Ensure the document reads as complete lecture notes suitable for last-minute exam revision.
+ 
+
+ 
+Formatting and tone
+ 
+ 
+- Use LaTeX formatting for mathematical expressions.
+ 
+- Maintain a formal, objective academic tone.
+ 
+- Do not include questions, commentary, or explanation of your process.
+ 
+
+ 
+Return the complete lecture scribe in a single response.
+  
