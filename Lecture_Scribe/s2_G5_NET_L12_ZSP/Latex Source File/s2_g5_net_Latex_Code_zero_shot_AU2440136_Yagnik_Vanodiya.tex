@@ -1,0 +1,135 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+
+\geometry{a4paper, margin=1in}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE400: Fundamentals of Probability in Computing}
+\rhead{Lecture 11/12 Scribe}
+\rfoot{Page \thepage}
+
+\title{\textbf{Lecture 11/12: Transformation of Random Variables}}
+\author{Instructor: Dhaval Patel, PhD}
+\date{February 10 - 12, 2026}
+
+\begin{document}
+\catcode`\_=12 % Treat underscore as a normal character to prevent auto-citation errors
+
+\maketitle
+
+\section{Overview}
+[cite_start]The goal is to determine the probability density function (PDF) and cumulative distribution function (CDF) of a new random variable $Y$, given that the PDF $f\sb{X}(x)$ and CDF $F\sb{X}(x)$ of an initial random variable $X$ are known a priori[cite: 520]. [cite_start]The lecture covers transformations of single random variables, $Y = g(X)$, and functions of two random variables, such as $Z = g(X, Y)$, focusing on cases like $Z = X + Y$, $Z = X - Y$, and $Z = X/Y$[cite: 523, 535, 540, 630, 730, 742].
+
+[cite_start]The outline of the concepts discussed includes[cite: 546]:
+\begin{itemize}
+    [cite_start]\item \leavevmode \textbf{Transformation of Random Variables:} Learning techniques for random variable transformations, specifically dealing with monotonically increasing (+ve) and monotonically decreasing (-ve) functions[cite: 548, 550, 552].
+    [cite_start]\item \leavevmode \textbf{Function of Two Random Variables:} Joint transformations and derived distributions[cite: 553, 556].
+    [cite_start]\item \leavevmode \textbf{Illustrative Example:} Detailed derivation for the case $Z = X + Y$[cite: 558, 559].
+\end{itemize}
+
+\section{Transformation of a Single Random Variable}
+[cite_start]To find the distribution of $Y = g(X)$ where $g(x)$ is a monotonic function, we use a structured step-by-step approach[cite: 548, 566].
+
+\subsection{Monotonically Increasing Function}
+[cite_start]If $y = g(x)$ is a monotonically increasing function, we apply the following steps[cite: 548, 550]:
+\begin{itemize}
+    [cite_start]\item \leavevmode \textbf{Step 1: Express the CDF of Y.} The CDF is defined as $F\sb{Y}(y) = \Pr(Y \le y)$[cite: 570, 579]. [cite_start]Substituting $g(X)$ for $Y$, we get $F\sb{Y}(y) = \Pr(g(X) \le y)$[cite: 579].
+    [cite_start]\item \leavevmode Taking the inverse function, $x = g^{-1}(y)$, this becomes $F\sb{Y}(y) = \Pr(X \le g^{-1}(y)) = F\sb{X}(g^{-1}(y))$[cite: 580].
+    [cite_start]\item \leavevmode \textbf{Step 2: Differentiate with respect to Y.} The PDF is the derivative of the CDF[cite: 569, 571].
+    $$f\sb{Y}(y) = \frac{d}{dy}[F\sb{X}(g^{-1}(y))]$$
+    [cite_start]\item \leavevmode Applying the chain rule, this yields $f\sb{Y}(y) = f\sb{X}(g^{-1}(y)) \cdot \frac{d}{dy}[g^{-1}(y)]$[cite: 573].
+    [cite_start]\item \leavevmode \textbf{Step 3: Change limits.} Ensure the domain of $X$ is properly mapped to the domain of $Y$[cite: 591].
+\end{itemize}
+
+\subsection{Monotonically Decreasing Function}
+[cite_start]If $y = g(x)$ is a monotonically decreasing function, the inequality direction changes[cite: 586, 589]:
+\begin{itemize}
+    [cite_start]\item \leavevmode $F\sb{Y}(y) = \Pr(Y \le y) = \Pr(X \ge g^{-1}(y))$[cite: 587, 589].
+    [cite_start]\item \leavevmode This can be expressed in terms of the CDF of $X$ as $F\sb{Y}(y) = 1 - F\sb{X}(g^{-1}(y))$[cite: 589].
+    [cite_start]\item \leavevmode Differentiating with respect to $y$ gives $f\sb{Y}(y) = 0 - f\sb{X}(g^{-1}(y)) \frac{d}{dy}[g^{-1}(y)]$[cite: 590].
+    [cite_start]\item \leavevmode Because $\frac{d}{dy}[g^{-1}(y)]$ is negative for a decreasing function, we can write the general PDF for both cases using the absolute value[cite: 594]:
+    $$f\sb{Y}(y) = \frac{f\sb{X}(x)}{\left| \frac{dy}{dx} \right|\sb{x=g^{-1}(y)}}$$
+\end{itemize}
+
+\subsection{Example: Sine Transformation}
+[cite_start]Let $X$ be a uniformly distributed random variable over the interval $(-1, 1)$[cite: 599]. The PDF of $X$ is:
+[cite_start]$$f\sb{X}(x) = \begin{cases} \frac{1}{2}, & -1 < x < 1 \\ 0, & \text{otherwise} \end{cases}$$ [cite: 601]
+
+[cite_start]We want to find the PDF of $Y = \sin(\frac{\pi x}{2})$[cite: 602].
+\begin{itemize}
+    [cite_start]\item \leavevmode First, find the inverse function: $x = \frac{2}{\pi} \sin^{-1}(y)$[cite: 603].
+    \item \leavevmode Find the derivative $\frac{dx}{dy}$:
+    [cite_start]$$\frac{dx}{dy} = \frac{2}{\pi} \frac{1}{\sqrt{1 - y^2}}$$ [cite: 604]
+    [cite_start]\item \leavevmode Determine the new limits: When $x = -1$, $y = \sin(-\frac{\pi}{2}) = -1$[cite: 607]. [cite_start]When $x = 1$, $y = 1$[cite: 608]. [cite_start]Thus, the bounds for $Y$ are $-1 < y < 1$[cite: 612].
+    \item \leavevmode Apply the transformation formula to find $f\sb{Y}(y)$:
+    $$f\sb{Y}(y) = f\sb{X}(x) \cdot \left| [cite_start]\frac{dx}{dy} \right|$$ [cite: 609]
+    [cite_start]$$f\sb{Y}(y) = \frac{1}{2} \cdot \frac{2}{\pi} \cdot \frac{1}{\sqrt{1 - y^2}} = \frac{1}{\pi \sqrt{1 - y^2}}$$ [cite: 611]
+\end{itemize}
+
+\section{Function of Two Random Variables}
+[cite_start]We are interested in finding the PDF $f\sb{Z}(z)$ for functions of two random variables, such as $Z = g(X,Y)$, where $X$ and $Y$ are independent random variables[cite: 617, 618, 620].
+
+\subsection{Derivation for $Z = X + Y$}
+[cite_start]To find the PDF of $Z = X + Y$, we first construct its CDF[cite: 630, 640]:
+[cite_start]$$F\sb{Z}(z) = \Pr(Z \le z) = \Pr(X + Y \le z)$$ [cite: 640]
+[cite_start]This inequality defines a region where $x \le z - y$[cite: 634]. [cite_start]The CDF is evaluated by integrating the joint PDF $f\sb{XY}(x,y)$ over this region[cite: 642]:
+[cite_start]$$F\sb{Z}(z) = \int\sb{y=-\infty}^{\infty} \int\sb{x=-\infty}^{z-y} f\sb{XY}(x,y) dx dy$$ [cite: 642]
+
+[cite_start]To find $f\sb{Z}(z) = \frac{d}{dz}[F\sb{Z}(z)]$, we use the Leibnitz rule for differentiating under the integral sign[cite: 644, 650].
+[cite_start]The Leibnitz rule states that for $G(x) = \int\sb{a(x)}^{b(x)} h(x,y) dy$[cite: 651]:
+[cite_start]$$\frac{d}{dx}[G(x)] = \frac{d}{dx}b(x) \cdot h(x, b(x)) - \frac{d}{dx}a(x) \cdot h(x, a(x)) + \int\sb{a(x)}^{c} \frac{\partial}{\partial x} h(x,y) dy$$ [cite: 652]
+
+[cite_start]Applying this to our expression for $F\sb{Z}(z)$[cite: 661, 666]:
+$$f\sb{Z}(z) = \int\sb{-\infty}^{\infty} \left[ \frac{d}{dz}(z-y) \cdot f\sb{XY}(z-y, y) - \frac{d}{dz}(-\infty) f\sb{XY}(-\infty, y) + \int\sb{-\infty}^{z-y} \frac{\partial}{\partial z} f\sb{XY}(x,y) dx \right] dy$$
+[cite_start]This simplifies to the convolution integral[cite: 662, 667]:
+[cite_start]$$f\sb{Z}(z) = \int\sb{-\infty}^{\infty} f\sb{XY}(x, z-x) dx$$ [cite: 667]
+[cite_start]Since $X$ and $Y$ are independent, $f\sb{XY}(x,y) = f\sb{X}(x)f\sb{Y}(y)$, yielding[cite: 673]:
+[cite_start]$$f\sb{Z}(z) = \int\sb{-\infty}^{\infty} f\sb{X}(x) \cdot f\sb{Y}(z-x) dx$$ [cite: 673]
+
+\subsection{Examples for $Z = X + Y$}
+
+\textbf{Example 1: Sum of Independent Normal Random Variables}
+[cite_start]Let $X \sim \mathcal{N}(0,1)$ and $Y \sim \mathcal{N}(0,1)$ be independent random variables[cite: 621]. [cite_start]We want to prove that $Z = X + Y \sim \mathcal{N}(0,2)$[cite: 622].
+[cite_start]The PDFs are $f\sb{X}(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$ and $f\sb{Y}(y) = \frac{1}{\sqrt{2\pi}} e^{-y^2/2}$[cite: 679, 687].
+[cite_start]Applying the convolution integral[cite: 688]:
+[cite_start]$$f\sb{Z}(z) = \int\sb{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-x^2/2} \cdot \frac{1}{\sqrt{2\pi}} e^{-(z-x)^2/2} dx$$ [cite: 688]
+[cite_start]Combining the exponents[cite: 688]:
+[cite_start]$$-\frac{x^2}{2} - \frac{(z-x)^2}{2} = -\frac{2x^2 - 2zx + z^2}{2}$$ [cite: 688]
+[cite_start]Completing the square for the terms involving $x$ yields[cite: 693]:
+[cite_start]$$\frac{-\left(\sqrt{2}x - \frac{z}{\sqrt{2}}\right)^2 + \frac{z^2}{2}}{2}$$ [cite: 693]
+[cite_start]Factoring out the terms constant with respect to $x$ and solving the integral gives[cite: 696]:
+[cite_start]$$f\sb{Z}(z) = \frac{1}{\sqrt{2\pi}\sqrt{2}} e^{-\frac{z^2}{2(2)}} = \frac{1}{\sqrt{2\pi}\sigma} e^{-z^2/2\sigma^2}$$ [cite: 696]
+[cite_start]Here, $\sigma^2 = 2$, which proves that $Z \sim \mathcal{N}(0,2)$[cite: 696].
+
+\textbf{Example 2: Sum of Independent Exponential Random Variables}
+[cite_start]Let $X$ and $Y$ be exponential random variables with parameter $\lambda$[cite: 702, 708].
+[cite_start]$$f\sb{X}(x) = \lambda e^{-\lambda x}, \quad f\sb{Y}(y) = \lambda e^{-\lambda y}$$ [cite: 708]
+[cite_start]For $Z = X + Y$, the PDF is[cite: 708]:
+[cite_start]$$f\sb{Z}(z) = \int\sb{-\infty}^{\infty} f\sb{X}(x) \cdot f\sb{Y}(z-x) dx$$ [cite: 708]
+[cite_start]Substituting the PDFs, noting the limits governed by the step functions $u(x)$ and $u(z-x)$[cite: 710, 718]:
+[cite_start]$$f\sb{Z}(z) = \int\sb{-\infty}^{\infty} \lambda e^{-\lambda x} u(x) \cdot \lambda e^{-\lambda(z-x)} dx$$ [cite: 710]
+
+\subsection{Other Operations}
+
+\textbf{Difference: $Z = X - Y$}
+[cite_start]For $Z = X - Y$[cite: 730]:
+\begin{itemize}
+    [cite_start]\item \leavevmode The CDF is $F\sb{Z}(z) = \Pr(Z \le z) = \Pr(X - Y \le z)$[cite: 736].
+    [cite_start]\item \leavevmode This corresponds to the region $x \le z + y$[cite: 734].
+    [cite_start]\item \leavevmode The CDF is formulated as $F\sb{Z}(z) = \int\sb{-\infty}^{\infty} \int\sb{-\infty}^{z+y} f\sb{XY}(x,y) dx dy$[cite: 737].
+    [cite_start]\item \leavevmode The PDF $f\sb{Z}(z) = \frac{d}{dz}[F\sb{Z}(z)]$ is derived using the same procedure as the sum $Z = X + Y$[cite: 737].
+\end{itemize}
+
+\textbf{Quotient: $Z = \frac{X}{Y}$}
+[cite_start]For the ratio $Z = \frac{X}{Y}$[cite: 742]:
+\begin{itemize}
+    [cite_start]\item \leavevmode The CDF is $F\sb{Z}(z) = \Pr(Z \le z) = \Pr(\frac{X}{Y} \le z)$[cite: 742].
+\end{itemize}
+
+\end{document}
