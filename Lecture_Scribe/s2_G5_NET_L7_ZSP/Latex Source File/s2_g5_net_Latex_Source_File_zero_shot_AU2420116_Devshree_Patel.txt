@@ -1,0 +1,167 @@
+\documentclass[11pt]{article}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setstretch{1.5}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor} 
+%\usepackage{fontspec}  % XeLaTeX or LuaLaTeX
+
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{L7 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+    \normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+    \vspace{0.2cm}
+    \textbf{CSE 400: Fundamentals of Probability in Computing}\\
+    \Large Lecture 7 Scribe
+}
+\author{} 
+\date{}
+
+\begin{document}
+\maketitle
+
+\vspace{-2cm}
+\begin{center}
+    \begin{tabular}{ll}
+        \textbf{Name:} & {Devshree Patel \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Enrollment No:} & {AU2420116 \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Email:} & {devshree.p1@ahduni.edu.in\hspace{2.1in}} \\ [1.5ex]
+        \textbf{Date of Submission:} & {February 7\textsuperscript{th}, 2026 (11:59 PM) \hspace{1.2in}}
+    \end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+
+\section{Cumulative Distribution Function (CDF)}
+
+\subsection{Definition}
+Let $X$ be a random variable.  
+The Cumulative Distribution Function (CDF) of $X$ is defined as
+\[
+F_X(x) = \Pr(X \le x), \quad -\infty < x < \infty
+\]
+
+Most of the information about the random experiment described by the random variable $X$
+is determined by the behavior of $F_X(x)$.
+
+\subsection{Properties of the CDF}
+The CDF satisfies the following properties:
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Bounds:}
+    \[
+    0 \le F_X(x) \le 1
+    \]
+
+    \item \textbf{Limits at Infinity:}
+    \[
+    F_X(-\infty) = 0, \quad F_X(\infty) = 1
+    \]
+
+    \item \textbf{Monotonicity:}  
+    For $x_1 < x_2$,
+    \[
+    F_X(x_1) \le F_X(x_2)
+    \]
+
+    \item \textbf{Probability over an Interval:}  
+    For $x_1 < x_2$,
+    \[
+    \Pr(x_1 < X \le x_2) = F_X(x_2) - F_X(x_1)
+    \]
+\end{enumerate}
+
+\subsection{Example 1: Valid CDFs}
+Find the valid CDF(s):
+
+\begin{enumerate}[label=\arabic*.]
+    \item $F_X(x) = \dfrac{1}{\pi}\tan^{-1}(x) + \dfrac{1}{2}$ \hfill \checkmark\ Valid
+    \item $F_X(x) = (1 - e^{-x})u(x)$ \hfill \checkmark\ Valid
+    \item $F_X(x) = e^{-x^2}$ \hfill $\times$ Not valid
+    \item $F_X(x) = x^2 u(x)$ \hfill $\times$ Not valid
+\end{enumerate}
+
+Here, $u(x)$ denotes the unit step function.
+
+\subsection{Example 2: Probability Computation Using CDF}
+Suppose a random variable $X$ has the CDF
+\[
+F_X(x) = (1 - e^{-x})u(x)
+\]
+
+Find:
+\begin{enumerate}[label=\arabic*.]
+    \item $\Pr(X > 5) = 1 - \Pr(X \le 5) = 1 - F_X(5)$
+    \item $\Pr(X < 5) = F_X(5)$
+    \item $\Pr(3 < X < 7) = F_X(7) - F_X(3)$
+    \item $\Pr(X > 5 \mid X < 7) =
+    \dfrac{\Pr(5 < X < 7)}{\Pr(X < 7)}$
+\end{enumerate}
+
+\section{Probability Density Function (PDF)}
+
+\subsection{Definition}
+For a continuous random variable $X$, the Probability Density Function (PDF) evaluated at
+point $x$ is defined as
+\[
+f_X(x) = \lim_{\epsilon \to 0} \frac{1}{\epsilon}
+\Pr(x \le X < x + \epsilon)
+\]
+
+\subsection{PDF--CDF Relationship}
+For a continuous range,
+\[
+\Pr(x \le X < x + \epsilon) = F_X(x + \epsilon) - F_X(x)
+\]
+
+Hence,
+\[
+f_X(x) = \lim_{\epsilon \to 0}
+\frac{F_X(x + \epsilon) - F_X(x)}{\epsilon}
+\]
+
+\subsection{Key Result}
+The PDF of a random variable is the derivative of its CDF:
+\[
+f_X(x) = \frac{d}{dx} F_X(x)
+\]
+
+Conversely, the CDF of a random variable can be expressed as the integral of its PDF.
+
+\section{Expectation of Random Variables}
+
+
+Topics listed in this lecture:
+\begin{itemize}
+    \item Definition and example of expectation
+    \item Expectation of a function of a random variable
+    \item Linear operation with expectation
+    \item $n^{\text{th}}$ moments and central moments of random variables
+    \item Variance
+    \item Skewness
+    \item Kurtosis
+\end{itemize}
+
+\noindent
+\bigskip
+\hrule
+\vspace{0.2cm}
+\begin{center}
+    \small \textit{End of L7 Scribe}
+\end{center}
+
+\end{document}

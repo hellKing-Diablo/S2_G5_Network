@@ -1,0 +1,197 @@
+\documentclass[11pt]{article}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setstretch{1.5}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor} 
+%\usepackage{fontspec}  % XeLaTeX or LuaLaTeX
+
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{L7 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+    \normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+    \vspace{0.2cm}
+    \textbf{CSE 400: Fundamentals of Probability in Computing}\\
+    \Large Lecture 7 Scribe
+}
+\author{} 
+\date{}
+
+\begin{document}
+\maketitle
+
+\vspace{-2cm}
+\begin{center}
+    \begin{tabular}{ll}
+        \textbf{Name:} & {Dhruv Dave \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Enrollment No:} & {AU2240096 \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Email:} & {dhruv.d2@ahduni.edu.in\hspace{2.1in}} \\ [1.5ex]
+        \textbf{Date of Submission:} & {February 7\textsuperscript{th}, 2026 (11:59 PM) \hspace{1.2in}}
+    \end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+\section*{Lecture 7: Expectation, CDFs, PDFs and Problem Solving}
+\textbf{Instructor:} Dhaval Patel, PhD \\
+\textbf{Date:} January 27, 2025
+
+\section{Outline}
+\begin{enumerate}
+    \item The Cumulative Distribution Function (CDF)
+    \begin{itemize}
+        \item Definition
+        \item Properties
+        \item Example
+    \end{itemize}
+    \item The Probability Density Function (PDF)
+    \begin{itemize}
+        \item Definition
+        \item Properties
+        \item Example
+    \end{itemize}
+    \item Expectation of Random Variables
+    \begin{itemize}
+        \item Definition and Example
+        \item Expectation of a Function of a Random Variable
+        \item Linear Operation with Expectation
+        \item $n^{\text{th}}$ Moments and Central Moments of RVs: Variance, Skewness, Kurtosis
+    \end{itemize}
+\end{enumerate}
+
+\section{The Cumulative Distribution Function (CDF)}
+
+\subsection{Definition}
+Let $X$ be a random variable. The Cumulative Distribution Function (CDF) is defined as:
+\[
+F_X(x) = \Pr(X \le x), \qquad -\infty < x < \infty
+\]
+Most of the information about the random experiment described by the random variable $X$ is determined by the behavior of $F_X(x)$.
+
+\subsection{Properties of the CDF}
+For any random variable $X$, its CDF $F_X(x)$ satisfies:
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Bounds:}
+    \[
+    0 \le F_X(x) \le 1
+    \]
+
+    \item \textbf{Limits:}
+    \[
+    F_X(-\infty) = 0, \qquad F_X(\infty) = 1
+    \]
+
+    \item \textbf{Monotonicity:}  
+    For $x_1 < x_2$,
+    \[
+    F_X(x_1) \le F_X(x_2)
+    \]
+
+    \item \textbf{Probability over an Interval:}  
+    \[
+    \Pr(x_1 < X \le x_2) = F_X(x_2) - F_X(x_1)
+    \]
+\end{enumerate}
+
+\subsection{Example 1: Validity of CDFs}
+\textbf{Problem:} Find the valid CDF(s).
+
+\begin{enumerate}[label=\arabic*.]
+    \item $F_X(x) = \frac{1}{2} + \frac{1}{\pi}\tan^{-1}(x)$ \hfill \checkmark\ Valid
+    \item $F_X(x) = [1 - e^{-x}]u(x)$ \hfill \checkmark\ Valid
+    \item $F_X(x) = e^{-x^2}$ \hfill $\times$ Invalid
+    \item $F_X(x) = x^2 u(x)$ \hfill $\times$ Invalid
+\end{enumerate}
+
+Here, $u(x)$ denotes the \textbf{unit step function}.
+
+\subsection{Example 2: Probability Computation Using a CDF}
+Suppose a random variable has a CDF given by:
+\[
+F_X(x) = (1 - e^{-x})u(x)
+\]
+
+Find the following quantities:
+
+\begin{enumerate}[label=\arabic*.]
+    \item $\Pr(X > 5)$
+    \[
+    \Pr(X > 5) = 1 - \Pr(X \le 5) = 1 - F_X(5) = e^{-5}
+    \]
+
+    \item $\Pr(X < 5)$
+    \[
+    \Pr(X < 5) = F_X(5)
+    \]
+
+    \item $\Pr(3 < X < 7)$
+    \[
+    \Pr(3 < X < 7) = F_X(7) - F_X(3)
+    \]
+
+    \item Conditional Probability $\Pr(X > 5 \mid X < 7)$
+    
+    Let $A = \{X > 5\}$ and $B = \{X < 7\}$.
+    \[
+    \Pr(A \mid B) = \frac{\Pr(A \cap B)}{\Pr(B)} = \frac{\Pr(5 < X < 7)}{\Pr(X < 7)}
+    \]
+    \[
+    = \frac{F_X(7) - F_X(5)}{F_X(7)}
+    \]
+\end{enumerate}
+
+\section{The Probability Density Function (PDF)}
+
+\subsection{Definition}
+For a \textbf{continuous random variable} $X$, the PDF evaluated at the point $x$ is defined as:
+\[
+f_X(x) = \lim_{\varepsilon \to 0} \frac{\Pr(x \le X < x + \varepsilon)}{\varepsilon}
+\]
+
+\subsection{PDF--CDF Relationship}
+Recall that for a continuous range:
+\[
+\Pr(x \le X < x + \varepsilon) = F_X(x + \varepsilon) - F_X(x)
+\]
+Substituting into the definition of PDF:
+\[
+f_X(x) = \lim_{\varepsilon \to 0}
+\frac{F_X(x + \varepsilon) - F_X(x)}{\varepsilon}
+\]
+\[
+\Rightarrow \boxed{f_X(x) = \frac{dF_X(x)}{dx}}
+\]
+
+\subsection{Fundamental Relationship}
+Hence, it is seen that:
+\begin{itemize}
+    \item The \textbf{PDF} of a random variable is the \textbf{derivative} of its CDF.
+    \item Conversely, the \textbf{CDF} of a random variable can be expressed as the \textbf{integral} of its PDF.
+\end{itemize}
+
+\section{Expectation of Random Variables}
+\textit{(Slides introduce the section heading only. No definitions, formulas, derivations, or examples are provided on the slides beyond this point.)}
+
+\noindent
+\bigskip
+\hrule
+\vspace{0.2cm}
+\begin{center}
+    \small \textit{End of L7 Scribe}
+\end{center}
+
+\end{document}
