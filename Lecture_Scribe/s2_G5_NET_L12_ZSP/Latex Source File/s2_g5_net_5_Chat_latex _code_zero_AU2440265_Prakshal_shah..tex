@@ -1,0 +1,348 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\title{CSE400 --- Lecture L11\_12 \\ Transformation of Random Variables}
+\author{Dhaval Patel, PhD}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Definitions}
+
+\textbf{Transformation of Random Variable}
+
+Given:
+\[
+X = \text{Random Variable with known PDF } f_X(x)
+\]
+\[
+Y = g(X)
+\]
+
+\section{Step-by-step Method (Monotonic Case)}
+
+\textbf{Step 1: CDF of $Y$}
+\[
+F_Y(y) = Pr(Y \le y)
+\]
+\[
+= Pr(g(X) \le y)
+\]
+
+If inverse exists:
+\[
+= Pr(X \le g^{-1}(y))
+\]
+\[
+= F_X(g^{-1}(y))
+\]
+
+\textbf{Step 2: Differentiate to get PDF}
+\[
+f_Y(y) = \frac{d}{dy} F_Y(y)
+\]
+\[
+= \frac{d}{dy}\left[F_X(g^{-1}(y))\right]
+\]
+
+Using chain rule:
+\[
+f_Y(y) = f_X(g^{-1}(y)) \cdot \frac{d}{dy} g^{-1}(y)
+\]
+
+\subsection{Case: Decreasing Function}
+
+\[
+F_Y(y) = Pr(Y \le y)
+\]
+\[
+= Pr(X \ge g^{-1}(y))
+\]
+\[
+= 1 - F_X(g^{-1}(y))
+\]
+
+Differentiate:
+\[
+f_Y(y) =
+- f_X(g^{-1}(y)) \cdot \frac{d}{dy} g^{-1}(y)
+\]
+
+\section{Example}
+
+Given:
+\[
+X \sim \text{Uniform}(-1,1)
+\]
+
+\[
+f_X(x) =
+\begin{cases}
+\frac{1}{2}, & -1 < x < 1 \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+Find PDF of:
+\[
+Y = \sin\left(\frac{\pi X}{2}\right)
+\]
+
+\textbf{Solution}
+
+Inverse:
+\[
+x = \frac{2}{\pi} \sin^{-1}(y)
+\]
+
+Derivative:
+\[
+\frac{dx}{dy} = \frac{2}{\pi} \cdot \frac{1}{\sqrt{1-y^2}}
+\]
+
+Using formula:
+\[
+f_Y(y) = f_X(x)\left|\frac{dx}{dy}\right|
+\]
+
+\[
+= \frac{1}{2} \cdot \frac{2}{\pi} \cdot \frac{1}{\sqrt{1-y^2}}
+\]
+
+\[
+= \frac{1}{\pi\sqrt{1-y^2}}, \quad -1<y<1
+\]
+
+\section{Function of Two Random Variables}
+
+Let:
+\[
+Z = X + Y
+\]
+
+Find:
+\[
+f_Z(z)
+\]
+
+If $X$ and $Y$ independent, special distributions apply.
+
+\section{CDF Method for Sum}
+
+\[
+F_Z(z) = Pr(Z \le z)
+\]
+\[
+= Pr(X+Y \le z)
+\]
+\[
+= \iint_{x+y \le z} f_{XY}(x,y)\,dx\,dy
+\]
+
+\section{Leibniz Rule}
+
+Let:
+\[
+G(x) = \int_{a(x)}^{b(x)} h(x,y)\,dy
+\]
+
+Then:
+\[
+\frac{d}{dx}G(x)
+=
+\frac{db(x)}{dx}h(x,b(x))
+-
+\frac{da(x)}{dx}h(x,a(x))
++
+\int_{a(x)}^{b(x)}
+\frac{\partial}{\partial x}h(x,y)\,dy
+\]
+
+\section{Derivation of PDF of Sum}
+
+\[
+f_Z(z)
+=
+\int_{-\infty}^{\infty}
+\left[
+\frac{d}{dz}
+\int_{-\infty}^{z-y}
+f_{XY}(x,y)\,dx
+\right] dy
+\]
+
+After applying Leibniz rule:
+\[
+f_Z(z)
+=
+\int_{-\infty}^{\infty}
+f_{XY}(z-y,y)\,dy
+\]
+
+Alternative:
+\[
+f_Z(z)
+=
+\int_{-\infty}^{\infty}
+f_{XY}(x,z-x)\,dx
+\]
+
+\section{Independent Case (Convolution)}
+
+If independent:
+\[
+f_{XY}(x,y) = f_X(x)f_Y(y)
+\]
+
+Therefore:
+\[
+f_Z(z)
+=
+\int_{-\infty}^{\infty}
+f_X(x)f_Y(z-x)\,dx
+\]
+
+Called \textbf{Convolution Integral}.
+
+\section{Normal Example}
+
+Given:
+\[
+X \sim N(0,1), \quad Y \sim N(0,1)
+\]
+
+\[
+f_X(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}
+\]
+\[
+f_Y(y) = \frac{1}{\sqrt{2\pi}} e^{-y^2/2}
+\]
+
+Using convolution:
+\[
+f_Z(z)
+=
+\int_{-\infty}^{\infty}
+\frac{1}{\sqrt{2\pi}}e^{-x^2/2}
+\cdot
+\frac{1}{\sqrt{2\pi}}e^{-(z-x)^2/2}
+\,dx
+\]
+
+Result:
+\[
+Z \sim N(0,2)
+\]
+
+\section{Exponential Example}
+
+Given:
+\[
+f_X(x)=\lambda e^{-\lambda x}, \quad x>0
+\]
+\[
+f_Y(y)=\lambda e^{-\lambda y}, \quad y>0
+\]
+
+Then:
+\[
+f_Z(z)
+=
+\int_0^z
+\lambda e^{-\lambda x}
+\cdot
+\lambda e^{-\lambda(z-x)}
+dx
+\]
+
+\[
+= \lambda^2 e^{-\lambda z} \int_0^z dx
+\]
+
+\[
+= \lambda^2 z e^{-\lambda z}, \quad z>0
+\]
+
+\section{Difference of Random Variables}
+
+\[
+Z = X-Y
+\]
+
+\[
+F_Z(z)=Pr(X-Y \le z)
+\]
+
+\[
+f_Z(z)=\frac{d}{dz}F_Z(z)
+\]
+
+Same procedure as sum.
+
+\section{Ratio Transformation}
+
+\[
+Z = \frac{X}{Y}
+\]
+
+\[
+F_Z(z)=Pr\left(\frac{X}{Y} \le z\right)
+\]
+
+Cases depend on:
+\[
+Y>0 \quad \text{or} \quad Y<0
+\]
+
+\section{Radial Transformation}
+
+\[
+R = X^2 + Y^2
+\]
+
+Find:
+\[
+f_R(r)
+\]
+
+\section{Important Results Summary}
+
+\subsection{Single Variable Transformation}
+
+\[
+f_Y(y)=
+f_X(g^{-1}(y))
+\left|
+\frac{d}{dy}g^{-1}(y)
+\right|
+\]
+
+\subsection{Sum of Two RVs}
+
+\[
+f_Z(z)=\int f_{XY}(x,z-x)\,dx
+\]
+
+\subsection{Independent Case}
+
+\[
+f_Z(z)=\int f_X(x)f_Y(z-x)\,dx
+\]
+
+\subsection{Normal Sum Result}
+
+\[
+X,Y \sim N(0,1)
+\Rightarrow
+Z=X+Y \sim N(0,2)
+\]
+
+\subsection{Exponential Sum Result}
+
+\[
+f_Z(z)=\lambda^2 z e^{-\lambda z}, \quad z>0
+\]
+
+\end{document}
