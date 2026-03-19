@@ -1,0 +1,17 @@
+Name- Devshree Patel
+Enrolment number -AU2420116
+section-2
+Group-s2_g5_net
+
+Prompt:
+You are an expert academic note-taker. Using ONLY the content from the uploaded PDF(s) — do not add any outside knowledge — create comprehensive exam-ready lecture notes in the following format:
+
+1. **Topic Overview** – What the lecture/chapter is about and key themes covered
+2. **Key Concepts & Definitions** – Every important term defined in simple language
+3. **Detailed Topic Explanations** – Go section by section, explain every concept thoroughly, include all examples and formulas from the PDF
+4. **Formulas & Rules** – List every formula/law with explanation of each component (if applicable)
+5. **Quick Revision Bullets** – Every major point in scannable bullet form
+6. **Potential Exam Questions** – MCQs, short and long answer questions based only on the PDF, with answers
+7. **Memory Tips** – Mnemonics or analogies to remember key concepts (if helpful)
+
+Be thorough. Do not skip any topic from the PDF. Explain everything clearly enough for a student reading it for the first time.
