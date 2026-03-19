@@ -1,0 +1,269 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\title{CSE400 – Lecture L15–L18 Scribe}
+\date{}
+\maketitle
+
+\section*{Joint Random Variables + Joint Distributions}
+
+\section*{1. DEFINITIONS}
+
+\subsection*{Joint Random Variables}
+Two (or more) random variables considered at the same time.
+
+\subsection*{Discrete Case – Joint PMF}
+
+\subsubsection*{Setup}
+\begin{itemize}
+\item Suppose $X$ and $Y$ are discrete random variables
+\item $X = \{x_1, x_2, \dots, x_n\}$
+\item $Y = \{y_1, y_2, \dots, y_m\}$
+\item Ordered pairs:
+\[
+(X,Y) \in \{(x_1,y_1), (x_1,y_2), \dots, (x_n,y_m)\}
+\]
+\end{itemize}
+
+\subsubsection*{Definition (Joint PMF)}
+\[
+p(x_i, y_j) = P(X = x_i, Y = y_j)
+\]
+Probability of joint outcome occurring simultaneously.
+
+\subsection*{Continuous Case – Joint PDF}
+
+\subsubsection*{Definition (Joint PDF)}
+A function $f(x,y)$ is called the joint probability density function if:
+\[
+P((X,Y) \text{ in small rectangle}) \approx f(x,y)\,dx\,dy
+\]
+
+\subsection*{Joint CDF}
+
+\subsubsection*{Notation}
+\[
+X \le x, \; Y \le y
+\]
+Means:
+\[
+\{X \le x \text{ and } Y \le y\}
+\]
+
+\subsubsection*{Definition (Joint CDF)}
+\[
+F(x,y) = P(X \le x, Y \le y)
+\]
+
+\section*{2. SYMBOLS}
+\begin{itemize}
+\item $(X, Y)$ $\rightarrow$ Random variables
+\item $(x_i, y_j)$ $\rightarrow$ Discrete values
+\item $p(x_i,y_j)$ $\rightarrow$ Joint PMF
+\item $f(x,y)$ $\rightarrow$ Joint PDF
+\item $F(x,y)$ $\rightarrow$ Joint CDF
+\item $dx, dy$ $\rightarrow$ Infinitesimal intervals
+\item $A$ $\rightarrow$ Event
+\end{itemize}
+
+\section*{3. IMPORTANT RESULTS}
+
+\subsection*{Discrete Joint PMF Properties}
+\[
+0 \le p(x_i,y_j) \le 1
+\]
+\[
+\sum_{i=1}^{n} \sum_{j=1}^{m} p(x_i,y_j) = 1
+\]
+
+\subsection*{Continuous Joint PDF Properties}
+\[
+f(x,y) \ge 0
+\]
+\[
+\int_c^d \int_a^b f(x,y)\,dx\,dy = 1
+\]
+
+\begin{itemize}
+\item Joint PDF may take values greater than 1
+\item It is a density, not a probability
+\end{itemize}
+
+\subsection*{Joint CDF (Continuous)}
+\[
+F(x,y) = \int_c^y \int_a^x f(u,v)\,du\,dv
+\]
+
+\subsection*{Recovering PDF}
+\[
+f(x,y) = \frac{\partial^2}{\partial x \partial y} F(x,y)
+\]
+
+\subsection*{Joint CDF (Discrete)}
+\[
+F(x,y) = \sum_{x_i \le x} \sum_{y_j \le y} p(x_i,y_j)
+\]
+
+\section*{4. FORMULAS}
+
+\subsection*{Joint PMF}
+\[
+p(x_i,y_j) = P(X = x_i, Y = y_j)
+\]
+
+\subsection*{Joint PDF}
+\[
+P = f(x,y)\,dx\,dy
+\]
+
+\subsection*{Normalization (Continuous)}
+\[
+\int_c^d \int_a^b f(x,y)\,dx\,dy = 1
+\]
+
+\subsection*{Joint CDF}
+\[
+F(x,y) = P(X \le x, Y \le y)
+\]
+
+\subsection*{Joint CDF (Continuous)}
+\[
+F(x,y) = \int_c^y \int_a^x f(u,v)\,du\,dv
+\]
+
+\subsection*{Recover PDF}
+\[
+f(x,y) = \frac{\partial^2}{\partial x \partial y} F(x,y)
+\]
+
+\subsection*{Joint CDF (Discrete)}
+\[
+F(x,y) = \sum_{x_i \le x} \sum_{y_j \le y} p(x_i,y_j)
+\]
+
+\section*{5. PROOF}
+
+\subsection*{Validity of Joint PDF (Example)}
+
+Given:
+\[
+f(x,y) = 4xy, \quad 0 \le x \le 1,\; 0 \le y \le 1
+\]
+
+\subsubsection*{Step 1: Normalization}
+\[
+\int_0^1 \int_0^1 4xy\,dx\,dy
+= \int_0^1 \left( \int_0^1 4xy\,dx \right) dy
+= \int_0^1 2y\,dy
+= [y^2]_0^1 = 1
+\]
+
+Hence:
+\begin{itemize}
+\item $f(x,y) \ge 0$
+\item Total probability = 1
+\item Valid joint PDF
+\end{itemize}
+
+\section*{6. DERIVATION (STEP-BY-STEP)}
+
+\subsection*{Compute $P(A)$}
+
+Event:
+\[
+A = \{X < 0.5, Y > 0.5\}
+\]
+
+\subsubsection*{Step 1}
+\[
+P(A) = \int_0^{0.5} \int_{0.5}^{1} 4xy\,dy\,dx
+\]
+
+\subsubsection*{Step 2}
+\[
+= \int_0^{0.5} \left[ 2x y^2 \right]_{0.5}^{1} dx
+\]
+
+\subsubsection*{Step 3}
+\[
+= \int_0^{0.5} 2x (1 - 0.25)\,dx
+\]
+
+\subsubsection*{Step 4}
+\[
+= \int_0^{0.5} 2x(0.75)\,dx
+= \int_0^{0.5} \frac{3}{2}x\,dx
+\]
+
+\subsubsection*{Step 5}
+\[
+= \left[ \frac{3}{4}x^2 \right]_0^{0.5}
+= \frac{3}{16}
+\]
+
+\section*{7. EXAMPLE (FROM SLIDES)}
+
+\subsection*{Rolling Two Dice}
+\begin{itemize}
+\item Experiment: Roll two fair dice
+\item $X$ = value on first die
+\item $T$ = total (sum)
+\end{itemize}
+
+Each outcome:
+\[
+P(i,j) = \frac{1}{36}
+\]
+
+\subsection*{Joint Table Observations}
+\begin{itemize}
+\item Entries are $0$ or $\frac{1}{36}$
+\item $X$ and $T$ are \textbf{not independent}
+\end{itemize}
+
+\section*{8. ADDITIONAL RESULTS (FROM SLIDES)}
+
+\subsection*{Continuous Case Mapping}
+\begin{itemize}
+\item Discrete values $\rightarrow$ Continuous intervals
+\item Joint PMF $\rightarrow$ Joint PDF
+\item Sums $\rightarrow$ Double integrals
+\end{itemize}
+
+\subsection*{Region}
+If:
+\[
+X \in [a,b], \quad Y \in [c,d]
+\]
+
+Then:
+\[
+(X,Y) \in [a,b] \times [c,d]
+\]
+
+\section*{9. PROPERTIES OF JOINT CDF}
+
+\begin{enumerate}
+\item Non-decreasing
+\[
+F(x,y) \text{ increases or stays constant}
+\]
+
+\item Lower-left corner
+\[
+F(x,y) = 0 \quad \text{as } (x,y) \to (-\infty,-\infty)
+\]
+
+\item Upper-right corner
+\[
+F(x,y) = 1 \quad \text{as } (x,y) \to (\infty,\infty)
+\]
+\end{enumerate}
+
+\section*{END OF SCRIBE}
+
+(Strictly extracted from slides, no external content added)
+
+\end{document}
