@@ -1,0 +1,227 @@
+\documentclass[11pt]{article}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setstretch{1.5}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{L15--L17 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+    \normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+    \vspace{0.2cm}
+    \textbf{CSE 400: Fundamentals of Probability in Computing}\\
+    \Large Lectures 15--17 Scribe
+}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\vspace{-2cm}
+\begin{center}
+    \begin{tabular}{ll}
+        \textbf{Name:} & {Devshree Patel \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Enrollment No:} & {AU2420116 \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Email:} & {devshree.p1@ahduni.edu.in\hspace{2.1in}} \\ [1.5ex]
+        \textbf{Date of Submission:} & {March 2026 (11:59 PM) \hspace{1.6in}}
+    \end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{1. Introduction to Joint Random Variables}
+
+In many practical settings, we study two or more random variables simultaneously rather than in isolation. A \textbf{joint distribution} describes the probability of different combinations of values taken by two random variables at the same time.
+
+Examples from the lecture:
+\begin{itemize}[noitemsep]
+    \item Height and weight; IQ and birth weight.
+    \item Vehicle speed ($X$) and traffic density ($Y$) in smart transportation.
+    \item Signal-to-noise ratio and data throughput in wireless networks.
+    \item Rainfall and temperature in weather prediction.
+\end{itemize}
+
+Joint distributions allow us to compute probabilities involving both variables and, when variables are dependent, to quantify their relationship through covariance and correlation.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{2. Joint Probability Mass Function (Discrete Case)}
+
+\subsection*{Definition}
+
+Let $X$ take values $\{x_1, x_2, \ldots, x_n\}$ and $Y$ take values $\{y_1, y_2, \ldots, y_m\}$.
+
+The \textbf{joint PMF} is defined as
+
+\[
+p(x_i, y_j) = P(X = x_i,\ Y = y_j)
+\]
+
+This is the probability that $X = x_i$ and $Y = y_j$ occur simultaneously.
+
+\subsection*{Properties}
+
+\begin{enumerate}[noitemsep]
+    \item $0 \le p(x_i, y_j) \le 1$ for all $i, j$.
+    \item $\displaystyle\sum_{i=1}^{n} \sum_{j=1}^{m} p(x_i, y_j) = 1$.
+\end{enumerate}
+
+The joint PMF is organised as a table, with rows representing values of $X$ and columns representing values of $Y$.
+
+\subsection*{Example: Rolling Two Dice}
+
+Roll two fair dice. Define:
+\[
+X = \text{value on first die}, \qquad T = \text{sum of both dice}
+\]
+
+Each elementary outcome $(i, j)$ has probability $\dfrac{1}{36}$.
+
+From the joint probability table, entries are either $0$ or $\dfrac{1}{36}$. Some combinations are impossible; for example, $X = 6$ and $T = 3$ cannot occur simultaneously.
+
+\textit{Observation:} $X$ and $T$ are \textbf{not independent}. Knowing $X$ restricts the possible values of $T$.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{3. Joint Probability Density Function (Continuous Case)}
+
+\subsection*{Definition}
+
+For continuous random variables $X$ and $Y$, a function $f(x, y)$ is the \textbf{joint PDF} if for any region $R$:
+
+\[
+P\!\left((X, Y) \in R\right) = \iint_R f(x, y)\; dx\, dy
+\]
+
+For a small rectangle of sides $dx$ and $dy$:
+
+\[
+P\!\bigl((X, Y) \in \text{small rectangle}\bigr) \approx f(x, y)\; dx\, dy
+\]
+
+\subsection*{Properties}
+
+\begin{enumerate}[noitemsep]
+    \item $f(x, y) \ge 0$ for all $(x, y)$.
+    \item $\displaystyle\int_{-\infty}^{\infty}\!\int_{-\infty}^{\infty} f(x, y)\; dx\, dy = 1$.
+\end{enumerate}
+
+\textbf{Note:} $f(x, y)$ can exceed 1 because it is a density, not a probability. Only an integral over a region yields a probability.
+
+\subsection*{Worked Example}
+
+Let
+\[
+f(x, y) = 4xy, \qquad 0 \le x \le 1,\ 0 \le y \le 1
+\]
+
+\textbf{Step 1: Verify non-negativity.}
+
+Since $x, y \ge 0$, we have $4xy \ge 0$. \checkmark
+
+\textbf{Step 2: Verify total probability equals 1.}
+
+\[
+\int_0^1\!\int_0^1 4xy\; dx\, dy
+= \int_0^1 \left[\int_0^1 4xy\; dx\right] dy
+= \int_0^1 2y\; dy
+= \bigl[y^2\bigr]_0^1 = 1 \quad \checkmark
+\]
+
+Hence $f(x, y) = 4xy$ is a valid joint PDF.
+
+\textbf{Step 3: Compute a probability.}
+
+Let $A = \{X < 0.5,\ Y > 0.5\}$. Then:
+
+\[
+P(A) = \int_0^{0.5}\!\int_{0.5}^{1} 4xy\; dy\, dx = \frac{3}{16}
+\]
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{4. Joint Cumulative Distribution Function}
+
+\subsection*{Definition}
+
+\[
+F(x, y) = P(X \le x,\ Y \le y)
+\]
+
+\subsection*{Continuous Case}
+
+\[
+F(x, y) = \int_{-\infty}^{x}\!\int_{-\infty}^{y} f(u, v)\; du\, dv
+\]
+
+Differentiating recovers the joint PDF:
+
+\[
+f(x, y) = \frac{\partial^2 F(x, y)}{\partial x\, \partial y}
+\]
+
+\subsection*{Discrete Case}
+
+\[
+F(x, y) = \sum_{x_i \le x}\ \sum_{y_j \le y} p(x_i, y_j)
+\]
+
+To compute $F(x, y)$, add all PMF values from rows with $x_i \le x$ and columns with $y_j \le y$.
+
+\subsection*{Properties of the Joint CDF}
+
+\begin{enumerate}
+    \item \textbf{Non-decreasing:} $F(x, y)$ is non-decreasing in both $x$ and $y$; increasing either argument cannot decrease the CDF.
+
+    \item \textbf{Lower-left boundary:}
+    \[
+        \lim_{(x,\, y)\to(-\infty,\,-\infty)} F(x, y) = 0
+    \]
+
+    \item \textbf{Upper-right boundary:}
+    \[
+        \lim_{(x,\, y)\to(+\infty,\,+\infty)} F(x, y) = 1
+    \]
+\end{enumerate}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{5. Formula Summary}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.8}
+\begin{tabular}{ll}
+    \hline
+    \textbf{Quantity} & \textbf{Formula} \\
+    \hline
+    Joint PMF & $p(x_i, y_j) = P(X = x_i,\ Y = y_j)$ \\
+    PMF normalisation & $\displaystyle\sum_i\sum_j p(x_i, y_j) = 1$ \\
+    Joint PDF probability & $P((X,Y)\in R) = \displaystyle\iint_R f(x,y)\; dx\,dy$ \\
+    PDF normalisation & $\displaystyle\int_{-\infty}^{\infty}\!\int_{-\infty}^{\infty} f(x,y)\; dx\,dy = 1$ \\
+    Joint CDF & $F(x,y) = P(X \le x,\ Y \le y)$ \\
+    CDF from PDF & $F(x,y) = \displaystyle\int_{-\infty}^{x}\!\int_{-\infty}^{y} f(u,v)\; du\,dv$ \\
+    PDF from CDF & $f(x,y) = \dfrac{\partial^2 F(x,y)}{\partial x\,\partial y}$ \\
+    Discrete CDF & $F(x,y) = \displaystyle\sum_{x_i \le x}\sum_{y_j \le y} p(x_i, y_j)$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.3cm}
+\begin{center}
+    \textit{End of L15--L17 Scribe}
+\end{center}
+
+\end{document}

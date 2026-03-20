@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 # Importing YOUR uploaded files
-from funPairsL import funPairsL
-from funSimSimpleDPP import funSimSimpleDPP
-from funLtoK import funLtoK
+from dependency.funPairsL import funPairsL
+from dependency.funSimSimpleDPP import funSimSimpleDPP
+from dependency.funLtoK import funLtoK
 
 # --- Setup from FairPairsCompareDetAloha.py ---
 lambda0 = 50

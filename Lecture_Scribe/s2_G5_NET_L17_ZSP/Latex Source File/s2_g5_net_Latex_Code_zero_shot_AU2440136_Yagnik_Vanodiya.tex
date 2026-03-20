@@ -1,0 +1,187 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{Lecture Scribe: Joint Random Variables and Joint Distributions}
+\author{CSE400 - Fundamentals of Probability in Computing [cite: 1] \\ Instructor: Dhaval Patel, PhD}
+\date{March 10, 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Why Study Joint Random Variables?}
+In science and in real life, we are often interested in two (or more) random variables at the same time. In such situations the random variables have a joint distribution that allows us to compute probabilities of events involving both variables and understand the relationship between the variables. This is simplest when the variables are independent. When they are not, we use covariance and correlation as measures of the nature of the dependence between them.
+
+Examples of joint random variables include:
+\begin{itemize}
+    \item Height and weight of giraffes 
+    \item IQ and birthweight of children 
+    \item Frequency of exercise and rate of heart disease 
+    \item Air pollution level and respiratory illness rate 
+    \item Number of Facebook friends and age of members 
+\end{itemize}
+
+\subsection{Application Examples}
+\textbf{Example \#1: Smart Transportation} 
+In a smart traffic system, two random variables are $X = $ Vehicle Speed and $Y = $ Traffic Density. Real ITS applications involve probabilistic analysis for adaptive traffic signals, congestion prediction, and autonomous vehicle routing.
+
+\textbf{Example \#2: Wireless Network Performance} 
+In a wireless system, two important random variables are $X = $ Signal-to-Noise Ratio (SNR) and $Y = $ Data Throughput. Throughput depends on SNR (both vary due to fading, interference, and congestion). The relationship can be shown conditionally based on Network Congestion.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+SNR Level & Throughput High & Throughput Low \\
+\midrule
+High & 0.40 & 0.10 \\
+Medium & 0.20 & 0.15 \\
+Low & 0.05 & 0.10 \\
+\bottomrule
+\end{tabular}
+\caption{Probability distribution of SNR and Throughput }
+\end{table}
+From this table, $X$ and $Y$ are correlated random variables. Network applications include 5G scheduling, adaptive modulation, and network planning.
+
+\textbf{Example \#3: Weather Prediction} 
+$X = $ Rainfall and $Y = $ Temperature. Applications in weather forecasting.
+
+\textbf{Example \#4: Drone Delivery} 
+$X = $ Wind Speed and $Y = $ Delivery Time. Applications in logistics and UAV systems.
+
+\textbf{Example \#5: Roll two dice}
+Roll two dice ($X$ and $Y$) using phones ($X+Y=7$ and $X>Y$). This requires joint PMF.
+
+\section{Discrete Case - Joint PMF}
+\subsection{Setup and Definition}
+Suppose $X$ and $Y$ are discrete random variables.
+Let $X \in \{x_1, x_2, \dots, x_n\}$ and $Y \in \{y_1, y_2, \dots, y_m\}$.
+The ordered pair $(X, Y)$ takes values in the product set:
+$\{(x_1, y_1), (x_1, y_2), \dots, (x_n, y_m)\}$.
+
+\textbf{Definition (Joint PMF):}
+$p(x_i, y_j) = P(X = x_i, Y = y_j)$[cite: 107, 108].
+This gives the probability of the joint outcome occurring simultaneously.
+
+\subsection{Properties of Joint PMF}
+We organize the joint PMF in a table where entries are $p(x_i, y_j)$.
+Key Properties:
+\begin{itemize}
+    \item $0 \le p(x_i, y_j) \le 1$ 
+    \item $\sum_{i=1}^{n} \sum_{j=1}^{m} p(x_i, y_j) = 1$
+\end{itemize}
+
+\subsection{Example: Rolling Two Dice}
+Experiment: Roll two fair dice. Let:
+\begin{itemize}
+    \item $X = $ value on the first die 
+    \item $T = $ total (sum) of both dice 
+\end{itemize}
+Since each outcome $(i,j)$ has probability $\frac{1}{36}$, we construct the joint probability table of $(X, T)$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccccccccccc}
+\toprule
+$X \backslash T$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+\midrule
+1 & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ & 0 & 0 & 0 & 0 & 0 \\
+2 & 0 & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ & 0 & 0 & 0 & 0 \\
+3 & 0 & 0 & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ & 0 & 0 & 0 \\
+4 & 0 & 0 & 0 & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ & 0 & 0 \\
+5 & 0 & 0 & 0 & 0 & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ & 0 \\
+6 & 0 & 0 & 0 & 0 & 0 & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ & $1/36$ \\
+\bottomrule
+\end{tabular}
+\caption{Joint Probability Table of $(X,T)$}
+\end{table}
+
+\textbf{Observations:}
+\begin{itemize}
+    \item Entries are either 0 or $\frac{1}{36}$ 
+    \item $X$ and $T$ are not independent 
+\end{itemize}
+
+\section{Continuous Case - Joint PDF}
+The continuous case is analogous to the discrete case:
+\begin{itemize}
+    \item Discrete values $\rightarrow$ Continuous intervals 
+    \item Joint PMF $\rightarrow$ Joint PDF 
+    \item Sums $\rightarrow$ Double integrals 
+\end{itemize}
+
+If $X \in [a,b]$ and $Y \in [c,d]$, then the pair $(X, Y)$ takes values in the product region: $[a,b] \times [c,d]$.
+
+\textbf{Definition (Joint PDF):}
+A function $f(x,y)$ is called the joint probability density function of $X$ and $Y$ if
+$P((X,Y) \text{ lies in a small rectangle of area } dx\,dy) \approx f(x,y)dx\,dy$.
+
+\textbf{Key Properties:}
+\begin{itemize}
+    \item $f(x,y) \ge 0$ 
+    \item $\int_{c}^{d} \int_{a}^{b} f(x,y) dx\,dy = 1$ 
+\end{itemize}
+The joint PDF $f(x,y)$ may take values greater than 1[cite: 285]. It is a probability density, not a probability.
+
+\subsection{Worked Example}
+\textbf{Given:} $f(x,y) = 4xy$, for $0 \le x \le 1$, $0 \le y \le 1$.
+Jointly, $(X, Y)$ takes values in the unit square $[0, 1]^2$.
+
+\textbf{Step 1: Check Validity (Normalization)} 
+\[
+\int_{0}^{1}\int_{0}^{1} 4xy \,dx\,dy = \int_{0}^{1}\left(\int_{0}^{1} 4xy \,dx\right)dy = \int_{0}^{1} 2y \,dy = [y^2]_{0}^{1} = 1
+\] 
+Hence $f(x,y) \ge 0$ and total probability is 1. So it is a valid joint PDF.
+
+\textbf{Step 2: Compute $P(A)$ for $A = \{X < 0.5, Y > 0.5\}$} 
+\[
+P(A) = \int_{0}^{0.5}\int_{0.5}^{1} 4xy \,dy\,dx = \int_{0}^{0.5} [2xy^2]_{0.5}^{1} dx = \int_{0}^{0.5} 2x(1 - 0.25) dx = \int_{0}^{0.5} \frac{3}{2}x \,dx = \left[\frac{3}{16}\right]
+\] 
+
+\section{Joint Cumulative Distribution Function (Joint CDF)}
+Suppose $X$ and $Y$ are jointly distributed random variables[cite: 356].
+We use the notation $X \le x, Y \le y$ to mean the event $\{X \le x \text{ and } Y \le y\}$.
+
+\textbf{Definition:}
+The joint cumulative distribution function is defined as
+$F(x,y) = P(X \le x, Y \le y)$
+
+\subsection{Continuous Case}
+If $X$ and $Y$ are continuous random variables with joint density $f(x,y)$ over $[a,b] \times [c,d]$, then the joint CDF is obtained by integrating the density:
+\[
+F(x,y) = \int_{c}^{y}\int_{a}^{x} f(u,v) du\,dv
+\] 
+\textbf{Recovering the Joint PDF:}
+Since there are two variables, we use partial derivatives:
+\[
+f(x,y) = \frac{\partial^2}{\partial x \partial y} F(x,y)
+\] 
+
+\subsection{Discrete Case}
+If $X$ and $Y$ are discrete random variables with joint PMF $p(x_i, y_j)$, then the joint CDF is obtained by summing probabilities:
+\[
+F(x,y) = \sum_{x_i \le x} \sum_{y_j \le y} p(x_i, y_j)
+\] 
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item Add all probabilities in the table 
+    \item For rows with $x_i \le x$ 
+    \item And columns with $y_j \le y$ 
+\end{itemize}
+
+\subsection{Properties of the Joint CDF}
+The joint CDF $F(x,y)$ of $X$ and $Y$ must satisfy several properties: 
+\begin{enumerate}
+    \item $F(x,y)$ is non-decreasing. If $x$ or $y$ increase, then $F(x,y)$ must stay constant or increase. 
+    \item $F(x,y) = 0$ at the lower-left of the joint range. If the lower-left corner is $(-\infty, -\infty)$, then 
+    $\lim_{(x,y) \rightarrow (-\infty, -\infty)} F(x,y) = 0$. 
+    \item $F(x,y) = 1$ at the upper-right of the joint range. If the upper-right corner is $(\infty, \infty)$ then 
+    $\lim_{(x,y) \rightarrow (\infty, \infty)} F(x,y) = 1$. 
+\end{enumerate}
+
+\end{document}
