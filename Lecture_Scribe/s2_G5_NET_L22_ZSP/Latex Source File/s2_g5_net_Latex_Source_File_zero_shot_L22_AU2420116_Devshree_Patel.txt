@@ -1,0 +1,462 @@
+\documentclass[11pt]{article}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setstretch{1.5}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{L22 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+    \normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+    \vspace{0.2cm}
+    \textbf{CSE 400: Fundamentals of Probability in Computing}\\
+    \Large Lecture 22 Scribe
+}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\vspace{-2cm}
+\begin{center}
+    \begin{tabular}{ll}
+        \textbf{Name:} & {Devshree Patel \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Enrollment No:} & {AU2420116 \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Email:} & {devshree.p1@ahduni.edu.in\hspace{2.1in}} \\ [1.5ex]
+        \textbf{Date of Submission:} & {April 1 2026 (11:59 PM) \hspace{1.6in}}
+    \end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+\section{Tail of a Random Variable}
+
+\textbf{Definition}
+
+The tail of a random variable $X$ is defined as:
+
+\[
+P(X > x)
+\]
+
+This represents the probability that the value of $X$ exceeds a particular threshold $x$.
+
+In probability distributions, this corresponds to the far right side of the distribution where unusually large values occur.
+
+\section{Diagram Explanation}
+
+The diagram shows a probability density curve.
+
+Important parts of the diagram:
+
+\begin{itemize}
+\item The horizontal axis shows the value of the random variable $X$.
+\item The vertical axis represents probability density.
+\item The shaded region on the right side of the curve represents:
+\end{itemize}
+
+\[
+P(X > x)
+\]
+
+This shaded area is called the tail probability.
+
+It represents the probability that $X$ takes unusually large values.
+
+\section{Why Do We Care About Tails?}
+
+The lecture provides two computing-related examples.
+
+\subsection{Example 1: Job Delay}
+
+Some jobs may be delayed more than 24 hours.
+
+Even if most jobs finish quickly, we want to know the probability that a job experiences an extreme delay.
+
+\subsection{Example 2: Packet Loss}
+
+Packets may be dropped when buffers become full.
+
+The tail probability represents rare overload situations where the system cannot handle traffic.
+
+\section{Key Idea}
+
+Two types of behavior exist in probability distributions.
+
+\subsection{Mean Behavior}
+
+The mean represents the average case.
+
+It describes typical behavior.
+
+This is usually easy to compute.
+
+\subsection{Tail Behavior}
+
+Tail events represent rare extreme events.
+
+Examples:
+
+\begin{itemize}
+\item Extremely large delays
+\item Sudden bursts of traffic
+\item Overloaded servers
+\end{itemize}
+
+These are harder to analyze mathematically.
+
+\section{Why Are Tails Hard to Compute?}
+
+According to the lecture:
+
+\begin{itemize}
+\item Tail probabilities require summing many small probabilities.
+\item Each individual probability is small, but the sum over many values is required.
+\end{itemize}
+
+Therefore computing exact tail probabilities can be mathematically complex.
+
+\section{Tail Example 1 — Server Load Distribution}
+
+\textbf{Problem}
+
+Suppose:
+
+\begin{itemize}
+\item $n$ jobs are distributed
+\item among $n$ servers
+\item randomly
+\end{itemize}
+
+Question:
+
+What is the probability that a particular server receives at least $k$ jobs?
+
+\[
+P(X \ge k)
+\]
+
+\subsection{Intuition}
+
+From the slides:
+
+\begin{enumerate}
+\item Jobs are assigned randomly.
+\item Most servers receive few jobs.
+\item Occasionally, one server receives many jobs.
+\end{enumerate}
+
+This situation is called a tail event because it represents a rare overload scenario.
+
+\subsection{Distribution Used}
+
+The number of jobs received by a server follows a Binomial distribution:
+
+\[
+X \sim Binomial(n,p)
+\]
+
+\subsection{Tail Probability Formula}
+
+The probability that the server receives at least $k$ jobs is:
+
+\[
+P(X \ge k) =
+\sum_{i=k}^{n}
+\binom{n}{i} p^i (1-p)^{n-i}
+\]
+
+\subsection{Meaning of Variables}
+
+\begin{itemize}
+\item $X$ : number of jobs assigned to the server
+\item $n$ : number of trials
+\item $p$ : probability of a job going to that server
+\item $k$ : threshold
+\item $\binom{n}{i}$ : binomial coefficient
+\end{itemize}
+
+\section{Tail Example 2 — Poisson Arrivals}
+
+Jobs arrive at a datacenter according to a Poisson process.
+
+Arrival rate:
+
+\[
+\lambda \text{ jobs per hour}
+\]
+
+Question:
+
+What is the probability that at least $k$ jobs arrive in the first hour?
+
+\[
+P(X \ge k)
+\]
+
+\subsection{Intuition}
+
+From the slides:
+
+\begin{itemize}
+\item Jobs arrive randomly over time.
+\item Most hours have moderate arrivals.
+\item Sometimes we observe bursts of arrivals.
+\end{itemize}
+
+These bursts represent tail events.
+
+\subsection{Distribution Used}
+
+\[
+X \sim Poisson(\lambda)
+\]
+
+\subsection{Tail Probability Formula}
+
+\[
+P(X \ge k) =
+\sum_{i=k}^{\infty}
+e^{-\lambda}\frac{\lambda^i}{i!}
+\]
+
+\section{Why Tail Bounds Are Needed}
+
+The lecture explains that exact tail probabilities are difficult to compute.
+
+Examples shown in the slides:
+
+\[
+P(X \ge k) =
+\sum_{i=k}^{\infty} e^{-\lambda}\frac{\lambda^i}{i!}
+\]
+
+\[
+P(X \ge k) =
+\sum_{i=k}^{n}
+\binom{n}{i}p^i(1-p)^{n-i}
+\]
+
+These formulas require long complicated sums.
+
+Therefore computing exact values is computationally expensive.
+
+\section{Idea of Tail Bounds}
+
+Instead of computing the exact value, the lecture suggests:
+
+Find an upper bound.
+
+Instead of:
+
+\[
+P(X \ge k) = ?
+\]
+
+We compute:
+
+\[
+P(X \ge k) \le \text{simple expression}
+\]
+
+Benefits:
+
+\begin{itemize}
+\item Easier to compute
+\item Still provides a guarantee
+\item Avoids complicated calculations
+\end{itemize}
+
+Key Idea:
+
+Approximate safely instead of computing exactly.
+
+\section{Running Example Used Throughout the Lecture}
+
+To compare different inequalities, the lecture uses a coin flipping experiment.
+
+Experiment:
+
+Flip a fair coin $n$ times.
+
+Define:
+
+\[
+X = \text{number of heads}
+\]
+
+Distribution:
+
+\[
+X \sim Binomial(n, \frac{1}{2})
+\]
+
+Mean:
+
+\[
+E[X] = \frac{n}{2}
+\]
+
+Question:
+
+What is the probability that
+
+\[
+X \ge \frac{3n}{4}
+\]
+
+This represents getting many more heads than expected.
+
+This is again a tail event.
+
+\section{Markov's Inequality}
+
+Key Idea:
+
+According to the lecture slides, Markov's inequality is based on two main observations:
+
+\begin{itemize}
+\item It uses only the mean (expected value) of the random variable.
+\item Large values are rare.
+\end{itemize}
+
+Definition:
+
+For a non-negative random variable $X$:
+
+\[
+P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+Explanation of Variables:
+
+\begin{itemize}
+\item $X$ : random variable
+\item $a$ : threshold value
+\item $E[X]$ : expected value (mean)
+\end{itemize}
+
+This inequality gives an upper bound on the probability that $X$ becomes large.
+
+\section{Chebyshev's Inequality}
+
+The lecture introduces a stronger bound.
+
+Key Idea:
+
+Chebyshev's inequality uses:
+
+\begin{itemize}
+\item Mean
+\item Variance
+\end{itemize}
+
+Definition:
+
+\[
+P(|X-\mu| \ge a) \le \frac{Var(X)}{a^2}
+\]
+
+Variables:
+
+\begin{itemize}
+\item $X$ : random variable
+\item $\mu$ : mean
+\item $Var(X)$ : variance
+\item $a$ : distance from mean
+\end{itemize}
+
+This measures the probability that $X$ deviates far from the mean.
+
+\section{Chernoff Bound}
+
+The lecture introduces an even stronger method.
+
+Progression of Ideas:
+
+\begin{itemize}
+\item Markov uses $X$
+\item Chebyshev uses $(X-\mu)^2$
+\item Chernoff uses $e^{tX}$
+\end{itemize}
+
+Key Insight:
+
+The exponential function grows very fast.
+
+Large values of $X$ become much larger when exponentiated.
+
+Thus tail events are amplified.
+
+\section{Core Trick of Chernoff Bound}
+
+Transformation:
+
+\[
+P(X \ge a) = P(e^{tX} \ge e^{ta})
+\]
+
+Apply Markov inequality to $e^{tX}$:
+
+\[
+P(e^{tX} \ge e^{ta}) \le \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+Because:
+
+\[
+e^{tX} \ge 0
+\]
+
+Markov inequality can be applied.
+
+\section{Final Chernoff Bound}
+
+\[
+P(X \ge a) \le \min_{t>0}\left(\frac{E[e^{tX}]}{e^{ta}}\right)
+\]
+
+Key Insight:
+
+The inequality holds for all $t>0$.
+
+We choose the value of $t$ that gives the tightest bound.
+
+Strength:
+
+Chernoff bounds are much stronger than Markov and Chebyshev.
+
+Reason:
+
+They produce exponential decay instead of polynomial decay.
+
+\section{Final Key Takeaways}
+
+\begin{enumerate}
+\item Tail probability measures the likelihood of extreme values.
+\item Exact tail computation is difficult.
+\item Tail bounds solve this problem by computing upper bounds.
+\item Three major inequalities are used:
+\begin{itemize}
+\item Markov
+\item Chebyshev
+\item Chernoff
+\end{itemize}
+\item Chernoff bounds provide the strongest guarantees.
+\end{enumerate}
+
+\end{document}
