@@ -1,0 +1,567 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\section*{CSE400 -- Lecture L21--L22 Scribe}
+
+\subsection*{Inequalities and Tail Bounds}
+
+\section*{1. DEFINITIONS}
+
+\subsection*{Tail of Random Variable}
+
+The tail of a random variable $X$ is:
+\[
+P(X > x)
+\]
+
+\section*{2. SYMBOLS}
+
+\begin{itemize}
+\item $X$ $\rightarrow$ Random variable
+\item $\mu$ $\rightarrow$ Mean $(E[X])$
+\item $\sigma$ $\rightarrow$ Standard deviation
+\item $Var(X)$ $\rightarrow$ Variance
+\item $a$ $\rightarrow$ Threshold
+\item $n$ $\rightarrow$ Number of trials
+\item $p$ $\rightarrow$ Probability
+\item $\lambda$ $\rightarrow$ Rate (Poisson)
+\item $t$ $\rightarrow$ Parameter (Chernoff)
+\end{itemize}
+
+\section*{3. IMPORTANT RESULTS}
+
+\subsection*{Markov Inequality}
+
+\[
+P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+\subsection*{Chebyshev Inequality}
+
+\[
+P(|X - \mu| \ge a) \le \frac{Var(X)}{a^2}
+\]
+
+\subsection*{Chernoff Bound (Final Form)}
+
+\[
+P(X \ge a) \le \min_{t>0} \left\{ \frac{E[e^{tX}]}{e^{ta}} \right\}
+\]
+
+\subsection*{Chernoff Bound (Lower Tail)}
+
+\[
+P(X \le a) \le \min_{t<0} \left\{ \frac{E[e^{tX}]}{e^{ta}} \right\}
+\]
+
+\section*{4. FORMULAS}
+
+\subsection*{Binomial Tail}
+
+\[
+P(X \ge k) = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i}
+\]
+
+\subsection*{Poisson Tail}
+
+\[
+P(X \ge k) = \sum_{i=k}^{\infty} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\subsection*{Expectation}
+
+\[
+E[X] = \sum x \cdot p_X(x)
+\]
+
+\subsection*{MGF (Poisson)}
+
+\[
+E[e^{tX}] = e^{\lambda(e^t - 1)}
+\]
+
+\section*{5. KEY IDEAS (FROM SLIDES)}
+
+\begin{itemize}
+\item Mean $\rightarrow$ average behavior (easy)
+\item Tail $\rightarrow$ rare extreme events (hard)
+\item Exact tail computation $\rightarrow$ complicated long sums
+\item Instead $\rightarrow$ compute upper bound
+\end{itemize}
+
+\subsection*{Markov Key Idea}
+
+\begin{itemize}
+\item Uses only the mean
+\item Large values $\Rightarrow$ rare
+\end{itemize}
+
+\subsection*{Chebyshev Key Idea}
+
+\begin{itemize}
+\item Uses mean + variance
+\item Controls deviation from mean
+\end{itemize}
+
+\subsection*{Chernoff Key Idea}
+
+\begin{itemize}
+\item Uses exponential $(e^{tX})$
+\item Exponential magnifies large values
+\item Better transformation $\Rightarrow$ tighter bound
+\end{itemize}
+
+\section*{6. PROOFS}
+
+\subsection*{Markov Inequality Proof}
+
+\[
+E[X] = \sum_{x=0}^{\infty} x \cdot p_X(x)
+\]
+
+\[
+\ge \sum_{x=a}^{\infty} x \cdot p_X(x)
+\]
+
+\[
+\ge \sum_{x=a}^{\infty} a \cdot p_X(x)
+\]
+
+\[
+= a \cdot P(X \ge a)
+\]
+
+\[
+\Rightarrow P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+\subsection*{Chebyshev Inequality Proof Idea}
+
+Apply Markov on $(X - \mu)^2$:
+
+\[
+P(|X - \mu| \ge a) = P((X - \mu)^2 \ge a^2)
+\]
+
+\[
+\le \frac{E[(X - \mu)^2]}{a^2}
+\]
+
+\[
+= \frac{Var(X)}{a^2}
+\]
+
+\subsection*{Chernoff Bound Proof (Core Trick)}
+
+\subsubsection*{Step 1: Transformation}
+
+\[
+P(X \ge a) = P(e^{tX} \ge e^{ta})
+\]
+
+\subsubsection*{Step 2: Apply Markov}
+
+\[
+P(e^{tX} \ge e^{ta}) \le \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+\subsubsection*{Step 3: Final}
+
+\[
+P(X \ge a) \le \min_{t>0} \left\{ \frac{E[e^{tX}]}{e^{ta}} \right\}
+\]
+
+\section*{7. DERIVATIONS (STEP-BY-STEP FROM SLIDES)}
+
+\subsection*{Running Example Setup}
+
+\begin{itemize}
+\item $X \sim \text{Binomial}(n, \tfrac{1}{2})$
+\item $\mu = E[X] = \tfrac{n}{2}$
+\end{itemize}
+
+\subsection*{Markov on Running Example}
+
+\[
+P\left(X \ge \frac{3n}{4}\right) \le \frac{E[X]}{3n/4}
+\]
+
+\[
+= \frac{n/2}{3n/4}
+\]
+
+\[
+= \frac{2}{3}
+\]
+
+\subsection*{Chebyshev on Running Example}
+
+\[
+P\left(X \ge \frac{3n}{4}\right)
+= P\left(X - \frac{n}{2} \ge \frac{n}{4}\right)
+\]
+
+\[
+\le P\left(|X - \mu| \ge \frac{n}{4}\right)
+\]
+
+\[
+\le \frac{Var(X)}{(n/4)^2}
+\]
+
+\[
+= \frac{n/4}{n^2/16}
+\]
+
+\[
+= \frac{4}{n}
+\]
+
+\subsection*{Chernoff for Poisson (Derivation)}
+
+\[
+E[e^{tX}] = \sum_{i=0}^{\infty} e^{ti} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\[
+= e^{-\lambda} \sum_{i=0}^{\infty} \frac{(\lambda e^t)^i}{i!}
+\]
+
+\[
+= e^{-\lambda} e^{\lambda e^t}
+\]
+
+\[
+= e^{\lambda(e^t - 1)}
+\]
+
+\section*{8. EXAMPLES (FROM SLIDES)}
+
+\subsection*{Example 1: Income Distribution (Markov)}
+
+\[
+P(X \ge 50000) \le \frac{10000}{50000} = 0.2
+\]
+
+\subsection*{Example 2: Exam Grades (Markov)}
+
+$\mu = 70$, $a = 90$
+
+\[
+P(X \ge 90) \le \frac{70}{90} = \frac{7}{9}
+\]
+
+\subsection*{Example 3: Server Requests}
+
+\[
+P(X \ge 20000) \le \frac{5000}{20000} = \frac{1}{4}
+\]
+
+\subsection*{Example 4: Chebyshev (Exam Scores)}
+
+$\mu = 70$, $\sigma = 10$
+
+\[
+P(|X - 70| \ge 30) \le \frac{10^2}{30^2} = \frac{1}{9}
+\]
+
+\subsection*{Example 5: Chebyshev (Grades)}
+
+\[
+P(X \ge 90) \le \frac{25}{400} = \frac{1}{16}
+\]
+
+\subsection*{Example 6: Network Latency}
+
+\[
+P(|X - 50| \ge 20) \le \frac{16}{400} = \frac{1}{25}
+\]
+
+\section*{END OF SCRIBE (STRICTLY FROM SLIDES)}
+
+\end{document}\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\section*{CSE400 -- Lecture L21--L22 Scribe}
+
+\subsection*{Inequalities and Tail Bounds}
+
+\section*{1. DEFINITIONS}
+
+\subsection*{Tail of Random Variable}
+
+The tail of a random variable $X$ is:
+\[
+P(X > x)
+\]
+
+\section*{2. SYMBOLS}
+
+\begin{itemize}
+\item $X$ $\rightarrow$ Random variable
+\item $\mu$ $\rightarrow$ Mean $(E[X])$
+\item $\sigma$ $\rightarrow$ Standard deviation
+\item $Var(X)$ $\rightarrow$ Variance
+\item $a$ $\rightarrow$ Threshold
+\item $n$ $\rightarrow$ Number of trials
+\item $p$ $\rightarrow$ Probability
+\item $\lambda$ $\rightarrow$ Rate (Poisson)
+\item $t$ $\rightarrow$ Parameter (Chernoff)
+\end{itemize}
+
+\section*{3. IMPORTANT RESULTS}
+
+\subsection*{Markov Inequality}
+
+\[
+P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+\subsection*{Chebyshev Inequality}
+
+\[
+P(|X - \mu| \ge a) \le \frac{Var(X)}{a^2}
+\]
+
+\subsection*{Chernoff Bound (Final Form)}
+
+\[
+P(X \ge a) \le \min_{t>0} \left\{ \frac{E[e^{tX}]}{e^{ta}} \right\}
+\]
+
+\subsection*{Chernoff Bound (Lower Tail)}
+
+\[
+P(X \le a) \le \min_{t<0} \left\{ \frac{E[e^{tX}]}{e^{ta}} \right\}
+\]
+
+\section*{4. FORMULAS}
+
+\subsection*{Binomial Tail}
+
+\[
+P(X \ge k) = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i}
+\]
+
+\subsection*{Poisson Tail}
+
+\[
+P(X \ge k) = \sum_{i=k}^{\infty} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\subsection*{Expectation}
+
+\[
+E[X] = \sum x \cdot p_X(x)
+\]
+
+\subsection*{MGF (Poisson)}
+
+\[
+E[e^{tX}] = e^{\lambda(e^t - 1)}
+\]
+
+\section*{5. KEY IDEAS (FROM SLIDES)}
+
+\begin{itemize}
+\item Mean $\rightarrow$ average behavior (easy)
+\item Tail $\rightarrow$ rare extreme events (hard)
+\item Exact tail computation $\rightarrow$ complicated long sums
+\item Instead $\rightarrow$ compute upper bound
+\end{itemize}
+
+\subsection*{Markov Key Idea}
+
+\begin{itemize}
+\item Uses only the mean
+\item Large values $\Rightarrow$ rare
+\end{itemize}
+
+\subsection*{Chebyshev Key Idea}
+
+\begin{itemize}
+\item Uses mean + variance
+\item Controls deviation from mean
+\end{itemize}
+
+\subsection*{Chernoff Key Idea}
+
+\begin{itemize}
+\item Uses exponential $(e^{tX})$
+\item Exponential magnifies large values
+\item Better transformation $\Rightarrow$ tighter bound
+\end{itemize}
+
+\section*{6. PROOFS}
+
+\subsection*{Markov Inequality Proof}
+
+\[
+E[X] = \sum_{x=0}^{\infty} x \cdot p_X(x)
+\]
+
+\[
+\ge \sum_{x=a}^{\infty} x \cdot p_X(x)
+\]
+
+\[
+\ge \sum_{x=a}^{\infty} a \cdot p_X(x)
+\]
+
+\[
+= a \cdot P(X \ge a)
+\]
+
+\[
+\Rightarrow P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+\subsection*{Chebyshev Inequality Proof Idea}
+
+Apply Markov on $(X - \mu)^2$:
+
+\[
+P(|X - \mu| \ge a) = P((X - \mu)^2 \ge a^2)
+\]
+
+\[
+\le \frac{E[(X - \mu)^2]}{a^2}
+\]
+
+\[
+= \frac{Var(X)}{a^2}
+\]
+
+\subsection*{Chernoff Bound Proof (Core Trick)}
+
+\subsubsection*{Step 1: Transformation}
+
+\[
+P(X \ge a) = P(e^{tX} \ge e^{ta})
+\]
+
+\subsubsection*{Step 2: Apply Markov}
+
+\[
+P(e^{tX} \ge e^{ta}) \le \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+\subsubsection*{Step 3: Final}
+
+\[
+P(X \ge a) \le \min_{t>0} \left\{ \frac{E[e^{tX}]}{e^{ta}} \right\}
+\]
+
+\section*{7. DERIVATIONS (STEP-BY-STEP FROM SLIDES)}
+
+\subsection*{Running Example Setup}
+
+\begin{itemize}
+\item $X \sim \text{Binomial}(n, \tfrac{1}{2})$
+\item $\mu = E[X] = \tfrac{n}{2}$
+\end{itemize}
+
+\subsection*{Markov on Running Example}
+
+\[
+P\left(X \ge \frac{3n}{4}\right) \le \frac{E[X]}{3n/4}
+\]
+
+\[
+= \frac{n/2}{3n/4}
+\]
+
+\[
+= \frac{2}{3}
+\]
+
+\subsection*{Chebyshev on Running Example}
+
+\[
+P\left(X \ge \frac{3n}{4}\right)
+= P\left(X - \frac{n}{2} \ge \frac{n}{4}\right)
+\]
+
+\[
+\le P\left(|X - \mu| \ge \frac{n}{4}\right)
+\]
+
+\[
+\le \frac{Var(X)}{(n/4)^2}
+\]
+
+\[
+= \frac{n/4}{n^2/16}
+\]
+
+\[
+= \frac{4}{n}
+\]
+
+\subsection*{Chernoff for Poisson (Derivation)}
+
+\[
+E[e^{tX}] = \sum_{i=0}^{\infty} e^{ti} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\[
+= e^{-\lambda} \sum_{i=0}^{\infty} \frac{(\lambda e^t)^i}{i!}
+\]
+
+\[
+= e^{-\lambda} e^{\lambda e^t}
+\]
+
+\[
+= e^{\lambda(e^t - 1)}
+\]
+
+\section*{8. EXAMPLES (FROM SLIDES)}
+
+\subsection*{Example 1: Income Distribution (Markov)}
+
+\[
+P(X \ge 50000) \le \frac{10000}{50000} = 0.2
+\]
+
+\subsection*{Example 2: Exam Grades (Markov)}
+
+$\mu = 70$, $a = 90$
+
+\[
+P(X \ge 90) \le \frac{70}{90} = \frac{7}{9}
+\]
+
+\subsection*{Example 3: Server Requests}
+
+\[
+P(X \ge 20000) \le \frac{5000}{20000} = \frac{1}{4}
+\]
+
+\subsection*{Example 4: Chebyshev (Exam Scores)}
+
+$\mu = 70$, $\sigma = 10$
+
+\[
+P(|X - 70| \ge 30) \le \frac{10^2}{30^2} = \frac{1}{9}
+\]
+
+\subsection*{Example 5: Chebyshev (Grades)}
+
+\[
+P(X \ge 90) \le \frac{25}{400} = \frac{1}{16}
+\]
+
+\subsection*{Example 6: Network Latency}
+
+\[
+P(|X - 50| \ge 20) \le \frac{16}{400} = \frac{1}{25}
+\]
+
+\section*{END OF SCRIBE (STRICTLY FROM SLIDES)}
+
+\end{document}
