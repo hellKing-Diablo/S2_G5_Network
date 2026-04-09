@@ -1,0 +1,13 @@
+Generate a lecture scribe using only the provided slides and textbook as the source.
+
+Include all definitions, notation, assumptions, theorems/results, proofs/derivations, and worked examples exactly as given.
+Present all steps in proofs, derivations, and examples without omission or modification.
+Maintain a formal academic tone with clear section headings and logical order matching the lecture.
+Ensure the document is complete and suitable for closed-notes exam revision.
+
+Do not:
+
+Add, infer, or assume any information not explicitly provided.
+Include explanations, intuition, summaries, or external knowledge.
+Modify, simplify, or restructure the original content.
+Add meta-commentary or instructions.

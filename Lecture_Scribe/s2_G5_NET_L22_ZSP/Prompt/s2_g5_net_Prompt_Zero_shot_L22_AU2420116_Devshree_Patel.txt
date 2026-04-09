@@ -1,0 +1,36 @@
+Name- Devshree Patel
+Enrolment number -AU2420116
+section-2
+Group-s2_g5_net
+
+Prompt:
+You are an expert university lecturer. I will provide a lecture PDF. Your task is to carefully read the entire document and explain the lecture in a clear, structured, and comprehensive way.
+
+Instructions:
+
+1. Use ONLY the information present in the PDF. Do not add any external information, assumptions, or examples that are not mentioned in the document.
+2. Cover every concept, definition, explanation, formula, diagram description, and key idea present in the lecture. Nothing from the lecture should be skipped.
+3. Do not introduce topics that are not present in the PDF.
+4. Explain each concept in simple and clear language so that a student encountering the topic for the first time can understand it.
+5. Maintain the logical order of the lecture as it appears in the PDF.
+6. Break the explanation into clear sections using headings and subheadings.
+7. For each concept:
+
+   * Define the concept
+   * Explain how it works
+   * Explain why it is important (only if mentioned in the PDF)
+8. If the lecture contains formulas, explain each variable and what the formula represents.
+9. If the lecture contains diagrams or figures, describe them clearly in words.
+10. Summarize key points at the end of each major section strictly based on the lecture content.
+11. Do not omit any details from the lecture.
+12. Do not add interpretations, opinions, or unrelated examples.
+
+Output Format:
+
+* Title of the Lecture
+* Section-wise Explanation of the Lecture
+* Detailed explanation of each concept
+* Explanation of formulas and figures (if present)
+* Key Takeaways from the Lecture
+
+Ensure the explanation is thorough, academically accurate, and faithful to the lecture PDF.

@@ -1,0 +1,292 @@
+\documentclass[11pt]{article}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setstretch{1.5}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor} 
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{L15--18 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+    \normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+    \vspace{0.2cm}
+    \textbf{CSE 400: Fundamentals of Probability in Computing}\\
+    \Large Lecture L15--18 Scribe
+}
+\author{} 
+\date{}
+
+\begin{document}
+\maketitle
+
+\vspace{-2cm}
+\begin{center}
+    \begin{tabular}{ll}
+        \textbf{Name:} & {Dhruv Dave \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Enrollment No:} & {AU2240096 \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Email:} & {dhruv.d2@ahduni.edu.in\hspace{2.1in}} \\ [1.5ex]
+        \textbf{Date:} & {March 21, 2026 \hspace{1.2in}}
+    \end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+\begin{center}
+    \textbf{Lecture L15--18: Joint Random Variables + Joint Distributions + Examples}\\
+\end{center}
+
+\section{Introduction to Topic Overview, Scope, and Significant Themes}
+This lecture addresses Joint Random Variables and Joint Distributions, covering both discrete and continuous cases, joint probability mass functions (PMF), joint probability density functions (PDF), joint cumulative distribution functions (CDF), and worked examples.
+
+In science and real life, interest often lies in two (or more) random variables at the same time. Examples include:
+\begin{itemize}
+    \item Height and weight of giraffes
+    \item IQ and birthweight of children
+    \item Frequency of exercise and rate of heart disease
+    \item Air pollution level and respiratory illness rate
+    \item Number of Facebook friends and age of members
+\end{itemize}
+
+Specific applications presented include:
+\begin{itemize}
+    \item \textbf{Smart transportation:} $X =$ Vehicle Speed, $Y =$ Traffic Density
+    \item \textbf{Wireless network performance:} $X =$ Signal-to-Noise Ratio, $Y =$ Data Throughput
+    \item \textbf{Weather prediction:} $X =$ Rainfall, $Y =$ Temperature
+    \item \textbf{Drone delivery:} $X =$ Wind Speed, $Y =$ Delivery Time
+    \item \textbf{Rolling two dice:} requires joint PMF
+\end{itemize}
+
+A joint distribution allows computation of probabilities of events involving both variables and understanding of relationships between them. When variables are not independent, covariance and correlation measure dependence.
+
+\section{Introductions — Notation — All Terms and Symbols Defined}
+Let $X$ and $Y$ be random variables.
+
+\subsection{Discrete Case Setup}
+Suppose $X$ and $Y$ are discrete random variables:
+\[
+X \in \{x_1, x_2, \ldots, x_n\}, \qquad Y \in \{y_1, y_2, \ldots, y_m\}.
+\]
+The ordered pair $(X, Y)$ takes values in the product set:
+\[
+\{(x_1,y_1), (x_1,y_2), \ldots, (x_n,y_m)\}.
+\]
+
+\textbf{Definition — Joint PMF}
+\[
+p(x_i, y_j) = P(X = x_i, Y = y_j).
+\]
+This gives the probability of the joint outcome occurring simultaneously.
+
+\subsection{Continuous Case Setup}
+Continuous case is analogous to the discrete case:
+\begin{itemize}
+    \item Discrete values $\rightarrow$ Continuous intervals
+    \item Joint PMF $\rightarrow$ Joint PDF
+    \item Sums $\rightarrow$ Double integrals
+\end{itemize}
+
+If:
+\[
+X \in [a,b], \qquad Y \in [c,d],
+\]
+then $(X,Y)$ takes values in:
+\[
+[a,b] \times [c,d].
+\]
+
+\textbf{Definition — Joint PDF}\\
+A function $f(x,y)$ is called the joint probability density function of $X$ and $Y$ if:
+\[
+P((X,Y)\ \text{lies in a small rectangle of area } dx\,dy) \approx f(x,y)\,dx\,dy.
+\]
+
+\subsection{Joint CDF Notation}
+Event notation:
+\[
+X \le x, Y \le y \quad \equiv \quad \{X \le x \text{ and } Y \le y\}.
+\]
+
+\textbf{Definition — Joint CDF}
+\[
+F(x,y) = P(X \le x, Y \le y).
+\]
+
+\section{Competencies and Results — Core Concepts, Theorems, Properties and Formulas}
+
+\subsection{Joint PMF Table Representation}
+Joint PMF can be organized in a table with entries $p(x_i,y_j)$.\\
+Key properties:
+\[
+0 \le p(x_i,y_j) \le 1,
+\]
+\[
+\sum_{i=1}^{n}\sum_{j=1}^{m} p(x_i,y_j) = 1.
+\]
+
+\subsection{Continuous Joint PDF — Key Properties}
+\[
+f(x,y) \ge 0,
+\]
+\[
+\int_{c}^{d}\int_{a}^{b} f(x,y)\,dx\,dy = 1.
+\]
+\textit{Note:} The joint PDF $f(x,y)$ may take values greater than $1$. It is a probability density, not a probability.
+
+\subsection{Joint CDF — Continuous Case}
+If $X$ and $Y$ have joint density $f(x,y)$ over $[a,b] \times [c,d]$, then:
+\[
+F(x,y) = \int_{c}^{y} \int_{a}^{x} f(u,v)\,du\,dv.
+\]
+Recovering the joint PDF:
+\[
+f(x,y) = \frac{\partial^2}{\partial x\,\partial y} F(x,y).
+\]
+
+\subsection{Joint CDF — Discrete Case}
+If $X,Y$ are discrete with joint PMF $p(x_i,y_j)$, then:
+\[
+F(x,y) = \sum_{x_i \le x}\sum_{y_j \le y} p(x_i,y_j).
+\]
+Interpretation:
+\begin{itemize}
+    \item Add all probabilities in rows with $x_i \le x$
+    \item And columns with $y_j \le y$
+\end{itemize}
+
+\subsection{Properties of the Joint CDF}
+The joint CDF $F(x,y)$ must satisfy:
+\begin{enumerate}
+    \item \textbf{Non-decreasing:} If $x$ or $y$ increase, then $F(x,y)$ stays constant or increases.
+    \item \textbf{Lower-left limit:} $F(x,y) = 0$ at the lower-left of the joint range. If the lower-left corner is $(-\infty,-\infty)$:
+    \[
+    \lim_{(x,y)\to(-\infty,-\infty)} F(x,y) = 0.
+    \]
+    \item \textbf{Upper-right limit:} $F(x,y) = 1$ at the upper-right of the joint range. If the upper-right corner is $(\infty,\infty)$:
+    \[
+    \lim_{(x,y)\to(\infty,\infty)} F(x,y) = 1.
+    \]
+\end{enumerate}
+
+\section{Proofs and Derivations — Step-by-Step}
+
+\subsection{Validation of a Joint PDF (Normalization)}
+\textbf{Given:}
+\[
+f(x,y) = 4xy, \quad 0 \le x \le 1, \quad 0 \le y \le 1.
+\]
+
+\noindent \textbf{Compute:}
+\[
+\int_{0}^{1}\int_{0}^{1} 4xy\,dx\,dy
+\]
+
+\noindent \textbf{Step-by-step:}
+\[
+= \int_{0}^{1} \left( \int_{0}^{1} 4xy\,dx \right) dy
+\]
+\[
+= \int_{0}^{1} \left( 4y \int_{0}^{1} x\,dx \right) dy
+\]
+\[
+= \int_{0}^{1} 4y \left[\frac{x^2}{2}\right]_0^1 dy
+\]
+\[
+= \int_{0}^{1} 4y \cdot \frac{1}{2} dy = \int_{0}^{1} 2y\,dy
+\]
+\[
+= \left[ y^2 \right]_0^1 = 1.
+\]
+Since $f(x,y) \ge 0$ and total probability equals $1$, it is a valid joint PDF.
+
+\section{Examples — Worked-Out Step-by-Step}
+
+\subsection{Example 1 — Rolling Two Dice}
+\textbf{Experiment:} Roll two fair dice. \\
+\textbf{Let:}
+\[
+X = \text{value on the first die}, \qquad T = \text{total (sum) of both dice}.
+\]
+Each outcome $(i,j)$ has probability:
+\[
+\frac{1}{36}.
+\]
+A joint probability table of $(X,T)$ is constructed. \\
+\textbf{Observations:}
+\begin{itemize}
+    \item Entries are either $0$ or $\frac{1}{36}$
+    \item $X$ and $T$ are not independent
+\end{itemize}
+
+\subsection{Example 2 — Continuous Joint PDF}
+\textbf{Given:}
+\[
+f(x,y) = 4xy,\quad 0 \le x \le 1, \quad 0 \le y \le 1.
+\]
+\textbf{Event:}
+\[
+A = \{X < 0.5, Y > 0.5\}.
+\]
+$(X,Y)$ lies in the unit square $[0,1]^2$.
+
+\vspace{0.3cm}
+\noindent \textbf{Step 1: Check Validity}\\
+Already shown:
+\[
+\int_{0}^{1}\int_{0}^{1} 4xy\,dx\,dy = 1.
+\]
+
+\noindent \textbf{Step 2: Compute $P(A)$}
+\[
+P(A) = \int_{0}^{0.5}\int_{0.5}^{1} 4xy\,dy\,dx.
+\]
+Inner integral:
+\[
+\int_{0.5}^{1} 4xy\,dy = 4x \int_{0.5}^{1} y\,dy = 4x \left[\frac{y^2}{2}\right]_{0.5}^{1}
+\]
+\[
+= 4x \cdot \frac{1 - 0.25}{2} = 4x \cdot \frac{0.75}{2} = 4x \cdot 0.375 = 1.5x.
+\]
+Outer integral:
+\[
+P(A) = \int_{0}^{0.5} 1.5x\,dx = 1.5 \left[\frac{x^2}{2}\right]_{0}^{0.5}
+\]
+\[
+= 1.5 \cdot \frac{0.25}{2} = 1.5 \cdot 0.125 = 0.1875 = \frac{3}{16}.
+\]
+
+\section{Summary of Revision — Key Points}
+\begin{itemize}
+    \item Joint random variables model outcomes involving multiple variables simultaneously.
+    \item Discrete case uses joint PMF $p(x_i,y_j)$.
+    \item Continuous case uses joint PDF $f(x,y)$.
+    \item Joint PMF properties: non-negative, total sum equals $1$.
+    \item Joint PDF properties: non-negative, double integral equals $1$.
+    \item Joint CDF defined as: $F(x,y) = P(X \le x, Y \le y)$.
+    \item Continuous CDF obtained by double integration of PDF.
+    \item PDF recoverable from CDF via second partial derivatives.
+    \item Discrete CDF obtained by summing PMF values for $x_i \le x, y_j \le y$.
+    \item Joint CDF is non-decreasing and bounded between $0$ and $1$.
+    \item Worked examples illustrate normalization and probability computation over regions.
+\end{itemize}
+
+\noindent
+\bigskip
+\hrule
+\vspace{0.2cm}
+\begin{center}
+    \small \textit{End of Lecture 15--18 Scribe}
+\end{center}
+
+\end{document}
